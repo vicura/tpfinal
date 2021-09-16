@@ -6,7 +6,8 @@ Date: November 2016
 # ref: https://github.com/charlesq34/pointnet/blob/master/utils/tf_util.py
 
 import numpy as np
-import tensorflow as tf
+import tensorflow.compat.v1 as tf as tf
+tf.compat.v1.disable_eager_execution()
 
 def _variable_on_cpu(name, shape, initializer, use_fp16=False):
   """Helper to create a Variable stored on CPU memory.
