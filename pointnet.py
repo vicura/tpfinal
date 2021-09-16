@@ -1,7 +1,7 @@
 #/usr/bin/python
 
 import numpy as np
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 from sklearn import preprocessing
 import sys, argparse
 import os
@@ -123,7 +123,7 @@ class PointNet:
 
     # Method to train the model
     def run(self, dataset, conf_matrix=True):
-        tf.compat.v1.reset_default_graph()
+        tf.reset_default_graph()
 
         pc_pl = tf.placeholder(tf.float32, [None, self.n_points, self.n_input])
         y_pl = tf.placeholder(tf.float32, [None, self.n_classes])
