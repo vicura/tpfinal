@@ -5,8 +5,7 @@ import tensorflow as tf
 from sklearn import preprocessing
 import sys, argparse
 import os
-
-from utils import tf_util
+import tf_util
 
 class PointNet:
     def __init__(self, lr=0.001, epochs=75, \
