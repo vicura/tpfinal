@@ -7,6 +7,8 @@ import sys, argparse
 import os
 import tf_util
 
+tf.compat.v1.disable_eager_execution()
+
 class PointNet:
     def __init__(self, lr=0.001, epochs=75, \
         batch_size=16, disp_step=1, n_points=25, n_input=3, \
