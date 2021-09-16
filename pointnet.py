@@ -33,8 +33,8 @@ class PointNet:
     # Model definition for pointnet
     def pointnet(self, point_cloud, is_training, bn=True, bn_decay=None):
         """ Classification PointNet, input is BxNx3, output Bxn where n is num classes """
-        batch_size = point_cloud.get_shape()[0].value
-        num_point = point_cloud.get_shape()[1].value
+        batch_size = point_cloud.get_shape()[0]
+        num_point = point_cloud.get_shape()[1]
 
         input_image = tf.expand_dims(point_cloud, -1)
 
