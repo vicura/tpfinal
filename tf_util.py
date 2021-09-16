@@ -38,7 +38,7 @@ def _variable_with_weight_decay(name, shape, stddev, wd, use_xavier=True):
     Variable Tensor
   """
   if use_xavier:
-    initializer = tf.keras.initializers.glorot_normal
+    initializer = tf.keras.initializers.glorot_normal()
 
 
   else:
