@@ -71,7 +71,7 @@ class PointNet:
                                       scope='fc1', bn_decay=bn_decay)
         net = tf_util.fully_connected(net, 256, bn=bn, is_training=is_training,
                                       scope='fc2', bn_decay=bn_decay)
-        net = tf_util.dropout(net, keep_prob=0.7, is_training=is_training,
+        net = tf_util.dropout(net, rate=0.3, is_training=is_training,
                               scope='dp1')
         net = tf_util.fully_connected(net, self.n_classes, activation_fn=None, scope='fc3')
 
