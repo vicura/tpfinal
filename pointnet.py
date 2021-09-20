@@ -65,7 +65,7 @@ class PointNet:
                                  padding='VALID', scope='maxpool')
         
         # MLP on global point cloud vector
-        net = tf.layers.flatten(net)
+        net = tf.keras.layers.Flatten(net)
         net = tf_util.fully_connected(net, 512, bn=bn, is_training=is_training,
                                       scope='fc1', bn_decay=bn_decay)
         net = tf_util.fully_connected(net, 256, bn=bn, is_training=is_training,
