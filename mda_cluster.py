@@ -15,8 +15,8 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(BASE_DIR)
 sys.path.append(os.path.join(BASE_DIR, '../'))
 
-import mda_custom.nsgrid.nsgrid_rsd as nsgrid
-from models.pointnet import PointNet
+import nsgrid_rsd as nsgrid
+from pointnet import PointNet
 
 def main():
 
@@ -32,8 +32,8 @@ def main():
     args = parser.parse_args()
 
     # Import topology
-    u = mda.Universe(args.trjpath+'.gro',
-                     args.trjpath+'.xtc')
+    u = mda.Universe(args.trjpath,
+                     topology_format='LAMMPSDUMP')
     
     # File to write output
     f_summary = open(args.outname+'_summary.mda','w')
