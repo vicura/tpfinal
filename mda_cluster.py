@@ -24,7 +24,7 @@ def main():
     parser = argparse.ArgumentParser(description='Uses MDAnalysis and PointNet to identify largest cluster of solid-like atoms')
     parser.add_argument('--weights', help='folder containing network weights to use', type=str, required=True)
     parser.add_argument('--nclass', help='number of classes', type=int, required=True)
-    parser.add_argument('--trjpath', help='path to gro/xtc files', type=str, required=True)
+    parser.add_argument('--trjpath', help='path to files', type=str, required=True)
     parser.add_argument('--cutoff', help='neighbor cutoff distance (in nm)', type=float, required=True)
     parser.add_argument('--maxneigh', help='max number of neighbors', type=int, required=True)
     parser.add_argument('--outname', help='output file name', type=str, required=True)
