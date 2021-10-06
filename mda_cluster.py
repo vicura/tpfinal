@@ -32,8 +32,7 @@ def main():
     args = parser.parse_args()
 
     # Import topology
-    u = mda.Universe(args.trjpath,
-                     topology_format='LAMMPSDUMP')
+    u = mda.Universe(args.trjpath,topology_format='LAMMPSDUMP')
     
     # File to write output
     f_summary = open(args.outname+'_summary.mda','w')
@@ -48,8 +47,7 @@ def main():
     for ts in u.trajectory:
         # Generate neighbor list
         print("Generating neighbor list") 
-        nlist = nsgrid.FastNS(args.cutoff*10.0,u.atoms.positions,
-                                      ts.dimensions).self_search()
+        nlist = nsgrid.FastNS(args.cutoff*10.0,u.atoms.positions,ts.dimensions).self_search()
 
         # Extract required info 
         ndxs = nlist.get_indices()
