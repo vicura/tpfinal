@@ -99,8 +99,8 @@ def main():
         ## solid atoms in the system (i.e., a solid nucleus)
 
         # We need neighbor lists for connectivity cutoff 
-        # Using 15.0 Angstroms (mda units) here
-        nlist = nsgrid.FastNS(15.0,u.atoms.positions,ts.dimensions).self_search()
+        # Using 11.0 Angstroms (mda units) here
+        nlist = nsgrid.FastNS(11.0,u.atoms.positions,ts.dimensions).self_search()
 
         pairs = nlist.get_pairs()
 
