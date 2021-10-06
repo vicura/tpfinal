@@ -38,7 +38,7 @@ def main():
     f_summary = open(args.outname+'_summary.mda','w')
     f_class = open(args.outname+'_class.mda','w')
     
-    f_summary.write("# Time, Largest_cls_solid, n_liq, n_fcc, n_hcp, n_bcc, n_solid\n")
+    f_summary.write("# Time, Largest_cls, n_lam, n_hex\n")
 
     # Here is where we initialize the pointnet
     pointnet = PointNet(n_points=args.maxneigh,n_classes=args.nclass,weights_dir=args.weights)
@@ -90,31 +90,28 @@ def main():
         sys.stdout.flush()
 
         # Extract different atom types
-        liquid_atoms = np.where(results == 0)[0]
-        fcc_atoms = np.where(results == 1)[0]
-        hcp_atoms = np.where(results == 2)[0]
-        bcc_atoms = np.where(results == 3)[0]
-        solid_atoms = np.where(results > 0)[0]
-        print("%d total solid atoms" % solid_atoms.shape[0])
+        lam_atoms = np.where(results == 0)[0]
+        hex_atoms = np.where(results == 1)[0]
+        other_atoms = np.where(results > 0)[0]
+        print("%d total other atoms" % other_atoms.shape[0])
 
         ## Now we are going to construct the largest cluster of
         ## solid atoms in the system (i.e., a solid nucleus)
 
         # We need neighbor lists for connectivity cutoff 
         # Using 15.0 Angstroms (mda units) here
-        nlist = nsgrid.FastNS(15.0,u.atoms.positions,
-                                    ts.dimensions).self_search()
+        nlist = nsgrid.FastNS(15.0,u.atoms.positions,ts.dimensions).self_search()
 
         pairs = nlist.get_pairs()
 
         # Find the largest cluster of solids (not liquid)
         G = nx.Graph()
         G.add_edges_from(pairs)
-        G.remove_nodes_from(liquid_atoms)
+        G.remove_nodes_from(lam_atoms)
         largest_cluster = max(nx.connected_component_subgraphs(G), key=len)
        
-        f_summary.write("{:8.3f}{:8d}{:8d}{:8d}{:8d}{:8d}{:8d}\n".format(ts.time,len(largest_cluster),liquid_atoms.shape[0],
-            fcc_atoms.shape[0],hcp_atoms.shape[0],bcc_atoms.shape[0],solid_atoms.shape[0]))
+        f_summary.write("{:8.3f}{:8d}{:8d}{:8d}{:8d}{:8d}{:8d}\n".format(ts.time,len(largest_cluster),lam_atoms.shape[0],
+            hex_atoms.shape[0]other_atoms.shape[0]))
 
         for node in largest_cluster:
             f_class.write("{:10d}{:8d}{:8d}\n".format(ts.frame+1,node,results[node]))
