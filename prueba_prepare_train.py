@@ -25,22 +25,22 @@ def main():
 
     #
     list_dir = os.listdir(args.path)    
-    dirs = [ os.path.join(args.path,d) for d in list_dir if d in classes]
-    #dirs = [d for d in os.listdir(args.path) if os.path.isdir("%s/%s" % (args.path, d))]
-    path = [Path(dir) for dir in dirs]
+    #dirs = [ os.path.join(args.path,d) for d in list_dir if d in classes]
     
-    #files = [f for f in p.glob('dump_file*') for p in path]
+    #path = [Path(dir) for dir in dirs]
     
-    files = []
-    for p in path:
-       for f in p.glob('dump_file*'):
-          files.append(str(f))
+    
+    
+    #files = []
+    #for p in path:
+    #   for f in p.glob('dump_file*'):
+    #      files.append(str(f))
           
+    files = [d for d in list_dir if 'lammpstrj' in d]     
           
-          
-    #files = [f for f in os.listdir(dir) for dir in dirs if 'dump_file' in f]
-    #files_lam = [f for f in os.listdir(dir) for dir in dirs if 'dump_file' in f if 'lam' in dir]
-    #files_hex = [f for f in os.listdir(dir) for dir in dirs if 'dump_file' in f if 'hex' in dir]
+    #files = [f for f in os.listdir(dir) for dir in dirs if 'dump_file' in f] nova
+    #files_lam = [f for f in os.listdir(dir) for dir in dirs if 'dump_file' in f if 'lam' in dir]  no va
+    #files_hex = [f for f in os.listdir(dir) for dir in dirs if 'dump_file' in f if 'hex' in dir]  no va
  
 
     # Initialize lists for samples and labels
