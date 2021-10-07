@@ -108,7 +108,8 @@ def main():
         G = nx.Graph()
         G.add_edges_from(pairs)
         G.remove_nodes_from(lam_atoms)
-        largest_cluster = max(nx.connected_component_subgraphs(G), key=len)
+        largest_cluster = max(nx.connected_components(G), key=len)
+        S = [G.subgraph(c).copy() for c in nx.connected_components(G)]
         #largest_cluster = max((G.subgraph(c) for c in connected_components(G)), key=len)
        
         f_summary.write("{:8.3f}{:8d}{:8d}{:8d}{:8d}{:8d}{:8d}\n".format(ts.time,len(largest_cluster),lam_atoms.shape[0],
