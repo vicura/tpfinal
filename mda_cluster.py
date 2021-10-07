@@ -111,9 +111,14 @@ def main():
         largest_cluster = max(nx.connected_components(G), key=len)
         S = [G.subgraph(c).copy() for c in nx.connected_components(G)]
         #largest_cluster = max((G.subgraph(c) for c in connected_components(G)), key=len)
-       
-        f_summary.write("{:8.3f}{:8d}{:8d}{:8d}{:8d}{:8d}{:8d}\n".format(ts.time,len(largest_cluster),lam_atoms.shape[0],
-            hex_atoms.shape[0]))
+        
+        if (len(lam_atoms)!=0) and (len(hex_atoms)!=0):
+           f_summary.write("{:8.3f}{:8d}{:8d}{:8d}{:8d}{:8d}{:8d}\n".format(ts.time,len(largest_cluster),lam_atoms.shape[0],
+               hex_atoms.shape[0]))
+        elif (len(hex_atoms)==0) :
+           f_summary.write("{:8.3f}{:8d}{:8d}{:8d}{:8d}{:8d}{:8d}\n".format(ts.time,len(largest_cluster),lam_atoms.shape[0])           
+        elif (len(lam_atoms)==0) :
+           f_summary.write("{:8.3f}{:8d}{:8d}{:8d}{:8d}{:8d}{:8d}\n".format(ts.time,len(largest_cluster),hex_atoms.shape[0])
 
         for node in largest_cluster:
             f_class.write("{:10d}{:8d}{:8d}\n".format(ts.frame+1,node,results[node]))
