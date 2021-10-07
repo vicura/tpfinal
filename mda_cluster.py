@@ -92,8 +92,8 @@ def main():
         # Extract different atom types
         lam_atoms = np.where(results == 0)[0]
         hex_atoms = np.where(results == 1)[0]
-        other_atoms = np.where(results > 0)[0]
-        print("%d total other atoms" % other_atoms.shape[0])
+        #other_atoms = np.where(results > 0)[0]
+        #print("%d total other atoms" % other_atoms.shape[0])
 
         ## Now we are going to construct the largest cluster of
         ## solid atoms in the system (i.e., a solid nucleus)
@@ -113,7 +113,7 @@ def main():
         #largest_cluster = max((G.subgraph(c) for c in connected_components(G)), key=len)
        
         f_summary.write("{:8.3f}{:8d}{:8d}{:8d}{:8d}{:8d}{:8d}\n".format(ts.time,len(largest_cluster),lam_atoms.shape[0],
-            hex_atoms.shape[0],other_atoms.shape[0]))
+            hex_atoms.shape[0]))
 
         for node in largest_cluster:
             f_class.write("{:10d}{:8d}{:8d}\n".format(ts.frame+1,node,results[node]))
