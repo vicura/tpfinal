@@ -38,7 +38,7 @@ def main():
     f_summary = open(args.outname+'_summary.mda','w')
     f_class = open(args.outname+'_class.mda','w')
     
-    f_summary.write("# Time, Largest_cls, n_lam, n_hex\n")
+    f_summary.write("# Time, Largest_cls, n_lam, n_hex, n_other\n")
 
     # Here is where we initialize the pointnet
     pointnet = PointNet(n_points=args.maxneigh,n_classes=args.nclass,weights_dir=args.weights)
@@ -92,7 +92,7 @@ def main():
         # Extract different atom types
         lam_atoms = np.where(results == 0)[0]
         hex_atoms = np.where(results == 1)[0]
-        #other_atoms = np.where(results > 0)[0]
+        other_atoms = np.where(results > 0)[0]
         #print("%d total other atoms" % other_atoms.shape[0])
 
         ## Now we are going to construct the largest cluster of
@@ -113,14 +113,14 @@ def main():
         #largest_cluster = max((G.subgraph(c) for c in connected_components(G)), key=len)
         
         if (len(lam_atoms)!=0) and (len(hex_atoms)!=0):
-           f_summary.write("{:8.3f}{:8d}{:8d}{:8d}{:8d}{:8d}{:8d}\n".format(ts.time,len(largest_cluster),lam_atoms.shape[0],
+           f_summary.write("{:8.3f}{:8d}{:8d}{:8d}{:8d}{:8d}{:8d}\n".format(ts.time,len(S),lam_atoms.shape[0],
                hex_atoms.shape[0]))
         elif (len(hex_atoms)==0):
-           f_summary.write("{:8.3f}{:8d}{:8d}{:8d}{:8d}{:8d}{:8d}\n".format(ts.time,len(largest_cluster),lam_atoms.shape[0]))           
+           f_summary.write("{:8.3f}{:8d}{:8d}{:8d}{:8d}{:8d}{:8d}\n".format(ts.time,len(S),lam_atoms.shape[0]))           
         elif (len(lam_atoms)==0):
-           f_summary.write("{:8.3f}{:8d}{:8d}{:8d}{:8d}{:8d}{:8d}\n".format(ts.time,len(largest_cluster),hex_atoms.shape[0]))
+           f_summary.write("{:8.3f}{:8d}{:8d}{:8d}{:8d}{:8d}{:8d}\n".format(ts.time,len(S),hex_atoms.shape[0]))
 
-        for node in largest_cluster:
+        for node in S:
             f_class.write("{:10d}{:8d}{:8d}\n".format(ts.frame+1,node,results[node]))
 
     f_summary.close()
