@@ -45,7 +45,7 @@ def main():
 
     # Loop over trajectory
     for ts in u.trajectory:
-        # Generate neighbor list
+        # Generate neighbor list (dentro de las coordenadas especificadas)
         print("Generating neighbor list") 
         nlist = nsgrid.FastNS(args.cutoff*10.0,u.atoms.positions,ts.dimensions).self_search()
 
@@ -93,7 +93,7 @@ def main():
         lam_atoms = np.where(results == 0)[0]
         hex_atoms = np.where(results == 1)[0]
         other_atoms = np.where(results > 0)[0]
-        #print("%d total other atoms" % other_atoms.shape[0])
+        print("%d total other atoms" % other_atoms.shape[0])
 
         ## Now we are going to construct the largest cluster of
         ## solid atoms in the system (i.e., a solid nucleus)

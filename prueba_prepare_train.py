@@ -75,7 +75,7 @@ def main():
           #print(sel)
           # Create neighbor list for atoms
           nlist = nsgrid.FastNS(args.cutoff*10.0,u.atoms.positions,ts.dimensions).search(u.atoms[sel].positions)
-          ndxs = nlist.get_indices()             # Devuelve los indices de los pared de vecinos?
+          ndxs = nlist.get_indices()             # Devuelve los indices de los vecinos?
           dxs = nlist.get_dx()
           dists = nlist.get_distances()          # Returns all the distances corresponding to each pair of neighbors
           for i in range(len(sel)):
@@ -95,7 +95,7 @@ def main():
              mean += delta/count
              delta2 = nneigh - mean
              m2 += delta*delta2
-             # Zero padding
+             # Zero padding (Si la muestra contiene menos de n puntos, la point cloud se rellenó con (0, 0, 0) puntos)
              if nneigh > args.max_neigh:
                 sample = np.resize(vals,(args.max_neigh,3))
              elif nneigh < args.max_neigh:
