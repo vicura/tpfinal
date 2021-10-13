@@ -39,6 +39,7 @@ def main():
     f_class = open(args.outname+'_class.mda','w')
     
     f_summary.write("# Time, Largest_cls, n_lam, n_hex, n_other\n")
+    f_class.write("# Frame, Nodo, Resultado\n")
 
     # Here is where we initialize the pointnet
     pointnet = PointNet(n_points=args.maxneigh,n_classes=args.nclass,weights_dir=args.weights)
@@ -105,15 +106,13 @@ def main():
         pairs = nlist.get_pairs()
 
         # Find the largest cluster of solids (not liquid)???
-        G = nx.Graph()
+        G = nx.Graph()					#Create an empty graph structure (a “null graph”) with no nodes and no edges.
         G.add_edges_from(pairs)
-        G.remove_nodes_from(lam_atoms)
+        #G.remove_nodes_from(lam_atoms)
         largest_cluster = G.subgraph(max(nx.connected_components(G), key=len))
-       
-        #largest_cluster = max((G.subgraph(c) for c in connected_components(G)), key=len)
         
         
-        f_summary.write("{:8.3f}{:8d}{:8d}{:8d}\n".format(ts.time,len(largest_cluster),lam_atoms.shape[0],hex_atoms.shape[0]))
+        f_summary.write("{:8.3f}{:8d}{:8d}{:8d}{:8d}\n".format(ts.time,len(largest_cluster),lam_atoms.shape[0],hex_atoms.shape[0],other_atoms.shape[0]))
         
         for node in largest_cluster:
             f_class.write("{:10d}{:8d}{:8d}\n".format(ts.frame+1,node,results[node]))
