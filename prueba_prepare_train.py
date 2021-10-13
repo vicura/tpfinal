@@ -72,7 +72,6 @@ def main():
        # Select atoms at random for samples
           sel = np.random.choice(u.atoms.n_atoms,size=args.n_select,replace=False)
           #sel = [13518]
-          #print(sel)
           # Create neighbor list for atoms
           nlist = nsgrid.FastNS(args.cutoff*10.0,u.atoms.positions,ts.dimensions).search(u.atoms[sel].positions)
           ndxs = nlist.get_indices()             # Devuelve los indices de los vecinos?
@@ -139,8 +138,8 @@ def main():
     np.save(args.out_name + '_scaled_shuffled_equal_labels.npy', labels)
 
     # Finalize and print avg/stdev nneigh
-    print("Mean nneigh: %f" % mean)
-    print("Stdev nneigh: %f" % ((math.sqrt(m2/count))))
+    #print("Mean nneigh: %f" % mean)
+    #print("Stdev nneigh: %f" % ((math.sqrt(m2/count))))
   
 def get_args():
 

@@ -104,7 +104,7 @@ def main():
 
         pairs = nlist.get_pairs()
 
-        # Find the largest cluster of solids (not liquid)
+        # Find the largest cluster of solids (not liquid)???
         G = nx.Graph()
         G.add_edges_from(pairs)
         G.remove_nodes_from(lam_atoms)
