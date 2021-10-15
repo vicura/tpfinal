@@ -93,7 +93,7 @@ def main():
         # Extract different atom types
         lam_atoms = np.where(results == 0)[0]
         hex_atoms = np.where(results == 1)[0]
-        other_atoms = np.where(results > 0)[0]
+        other_atoms = np.where(results > 1)[0]
         print("%d total other atoms" % other_atoms.shape[0])
 
         ## Now we are going to construct the largest cluster of
