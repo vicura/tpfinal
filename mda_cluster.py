@@ -83,7 +83,7 @@ def main():
         print("Frame {}, Shape sent to pointnet: {}".format(ts.frame,np_samples.shape))
         sys.stdout.flush()
     
-        # Send sample through inference ??
+        # Send sample through inference (se hacen las predicciones)
         results = pointnet.infer_nolabel(np_samples)
         results = np.asarray(results)
     
