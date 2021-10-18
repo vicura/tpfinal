@@ -113,7 +113,7 @@ def main():
                                                       # grande (?. No nos serviria a nosotros?
         largest_cluster = G.subgraph(max(nx.connected_components(G), key=len))     # Subgraph view of the graph, consists in the  
                                                                                    # largest connected component of the graph (mayor
-                                                                                   # cantidad de vecinos?)
+                                                                                   # cantidad de vecinos conectados?)
         
         
         f_summary.write("{:8.3f}{:8d}{:8d}{:8d}\n".format(ts.time,len(largest_cluster),lam_atoms.shape[0],
