@@ -38,7 +38,7 @@ def main():
     f_summary = open(args.outname+'_summary.mda','w')
     f_class = open(args.outname+'_class.mda','w')
     
-    f_summary.write("# Time, Largest_cls, n_lam, n_hex\n")
+    f_summary.write("# Time, Tamaño del Largest_cls, n_lam, n_hex\n")
     f_class.write("# Frame, Nodo, Resultado\n")
 
     # Here is where we initialize the pointnet
@@ -83,7 +83,7 @@ def main():
         print("Frame {}, Shape sent to pointnet: {}".format(ts.frame,np_samples.shape))
         sys.stdout.flush()
     
-        # Send sample through inference 
+        # Send sample through inference ??
         results = pointnet.infer_nolabel(np_samples)
         results = np.asarray(results)
     
@@ -107,16 +107,21 @@ def main():
 
         # Find the largest cluster of solids (not liquid)???
         G = nx.Graph()					#Create an empty graph structure (a “null graph”) with no nodes and no edges.
-        G.add_edges_from(pairs)                       #G is grown adding a list of edges 
-        #G.remove_nodes_from(lam_atoms)
-        largest_cluster = G.subgraph(max(nx.connected_components(G), key=len))
+        G.add_edges_from(pairs)                       #G is grown adding a list of edges (en este caso los edges se forman al listar los 
+                                                      # pares de vecinos considerados dentro del cutoff indicado)
+        #G.remove_nodes_from(liquid_atoms)            # aca se sacaron los nodos liquidos porque buscan e cluster de atomos sólidos más 
+                                                      # grande (?. No nos serviria a nosotros?
+        largest_cluster = G.subgraph(max(nx.connected_components(G), key=len))     # Subgraph view of the graph, consists in the  
+                                                                                   # largest connected component of the graph (mayor
+                                                                                   # cantidad de vecinos?)
         
         
         f_summary.write("{:8.3f}{:8d}{:8d}{:8d}\n".format(ts.time,len(largest_cluster),lam_atoms.shape[0],
            hex_atoms.shape[0]))
         
         for node in largest_cluster:
-            f_class.write("{:10d}{:8d}{:8d}\n".format(ts.frame+1,node,results[node]))
+            f_class.write("{:10d}{:8d}{:8d}\n".format(ts.frame+1,node,results[node]))  #indica a que clase pertenece cada nodo del 
+                                                                                       #largest cluster
 
     f_summary.close()
     f_class.close()
