@@ -116,13 +116,14 @@ def main():
                                                                                    # largest connected component of the graph (mayor
                                                                                    # cantidad de vecinos conectados?)
         
+        pos = nx.spring_layout(largest_cluster, dim=3)
         
         f_summary.write("{:8.3f}{:8d}{:8d}{:8d}\n".format(ts.time,len(largest_cluster),lam_atoms.shape[0],
            hex_atoms.shape[0]))
         
         for node in largest_cluster:
-            f_class.write("{:10d}{:8d}{:8d}\n".format(ts.frame+1,node,results[node]))  #indica a que clase pertenece cada nodo del 
-                                                                                       #largest cluster
+            f_class.write("{:10d}{:8d}{:8d}\n".format(ts.frame+1,node,results[node],pos[node]))  #indica a que clase pertenece cada nodo 
+                                                                                                 # del largest cluster
 
     f_summary.close()
     f_class.close()
