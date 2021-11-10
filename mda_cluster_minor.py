@@ -39,7 +39,7 @@ def main():
     f_summary = open(args.outname+'_summary.mda','w')
     f_class = open(args.outname+'_class.mda','w')
     
-    f_summary.write("# Time, Tamaño del Largest_cls, n_lam, n_hex\n")
+    f_summary.write("{:^8s}{:^25s}{:^8s}{:^8s}\n".format('Time','Tamaño del Largest_cls','n_lam','n_hex'))
     f_class.write("{:^10s}{:^8s}{:^8s}{:^20s}{:^20s}{:^20s}\n".format('Frame','Nodo','Resultado','x','y','z'))
 
     # Here is where we initialize the pointnet
@@ -118,7 +118,7 @@ def main():
         
         pos = nx.spring_layout(largest_cluster, dim=3)            # coordenadas de los nodos del largest cluster
         
-        f_summary.write("{:8.3f}{:8d}{:8d}{:8d}\n".format(ts.time,len(largest_cluster),lam_atoms.shape[0],
+        f_summary.write("{:8.3f}{:25d}{:8d}{:8d}\n".format(ts.time,len(largest_cluster),lam_atoms.shape[0],
            hex_atoms.shape[0]))
         
         for node in largest_cluster:
