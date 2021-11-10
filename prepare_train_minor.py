@@ -68,13 +68,13 @@ def main():
    
        
        u = mda.Universe(files[fcount],topology_format='LAMMPSDUMP')
-       u = u.select_atoms('type 2')
+       dos = u.select_atoms('type 2')
        for ts in u.trajectory:
        # Select atoms at random for samples
-          sel = np.random.choice(u.atoms.n_atoms,size=args.n_select,replace=False)
+          sel = np.random.choice(dos.n_atoms,size=args.n_select,replace=False)
           #sel = [13518]
           # Create neighbor list for atoms
-          nlist = nsgrid.FastNS(args.cutoff*10.0,u.atoms.positions,ts.dimensions).search(u.atoms[sel].positions)
+          nlist = nsgrid.FastNS(args.cutoff*10.0,dos.positions,ts.dimensions).search(dos[sel].positions)
           ndxs = nlist.get_indices()             # Devuelve los indices de los vecinos?
           dxs = nlist.get_dx()
           dists = nlist.get_distances()          # Returns all the distances corresponding to each pair of neighbors

@@ -33,7 +33,7 @@ def main():
 
     # Import topology
     u = mda.Universe(args.trjpath,topology_format='LAMMPSDUMP')
-    u = u.select_atoms('type 2')
+    dos = u.select_atoms('type 2')
     
     # File to write output
     f_summary = open(args.outname+'_summary.mda','w')
@@ -49,7 +49,7 @@ def main():
     for ts in u.trajectory:
         # Generate neighbor list (dentro de las coordenadas especificadas)
         print("Generating neighbor list") 
-        nlist = nsgrid.FastNS(args.cutoff*10.0,u.atoms.positions,ts.dimensions).self_search()
+        nlist = nsgrid.FastNS(args.cutoff*10.0,dos.positions,ts.dimensions).self_search()
 
         # Extract required info 
         ndxs = nlist.get_indices()
@@ -102,7 +102,7 @@ def main():
 
         # We need neighbor lists for connectivity cutoff 
         # Using 5.0 Angstroms (mda units) here
-        nlist = nsgrid.FastNS(5.0,u.atoms.positions,ts.dimensions).self_search()   #que cutoff usar??
+        nlist = nsgrid.FastNS(5.0,dos.positions,ts.dimensions).self_search()   #que cutoff usar??
 
         pairs = nlist.get_pairs()   #get_pairs returns all the pairs within the desired cutoff distance
 
