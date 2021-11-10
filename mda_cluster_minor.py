@@ -116,7 +116,7 @@ def main():
                                                                                    # largest connected component of the graph (mayor
                                                                                    # cantidad de vecinos conectados?)
         
-        pos = nx.spring_layout(largest_cluster, dim=3)
+        pos = nx.spring_layout(largest_cluster, dim=3)            # coordenadas de los nodos del largest cluster
         
         f_summary.write("{:8.3f}{:8d}{:8d}{:8d}\n".format(ts.time,len(largest_cluster),lam_atoms.shape[0],
            hex_atoms.shape[0]))
