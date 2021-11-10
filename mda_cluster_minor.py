@@ -40,7 +40,7 @@ def main():
     f_class = open(args.outname+'_class.mda','w')
     
     f_summary.write("# Time, Tamaño del Largest_cls, n_lam, n_hex\n")
-    f_class.write("# Frame, Nodo, Resultado\n")
+    f_class.write("{:^10s}{:^8s}{:^8s}{:^20s}{:^20s}{:^20s}\n".format('Frame','Nodo','Resultado','x','y','z'))
 
     # Here is where we initialize the pointnet
     pointnet = PointNet(n_points=args.maxneigh,n_classes=args.nclass,weights_dir=args.weights)
@@ -122,7 +122,7 @@ def main():
            hex_atoms.shape[0]))
         
         for node in largest_cluster:
-            f_class.write("{:10d}{:8d}{:8d}{:8.3f}{:8.3f}{:8.3f}\n".format(ts.frame+1,node,results[node],pos[node]))  #indica a que clase pertenece cada nodo 
+            f_class.write("{:^10d}{:^8d}{:^8d}{:^20.10f}{:^20.10f}{:^20.10f}\n".format(ts.frame+1,node,results[node],pos[node][0],pos[node][1],pos[node][2]))  #indica a que clase pertenece cada nodo 
                                                                                                  # del largest cluster
 
     f_summary.close()
