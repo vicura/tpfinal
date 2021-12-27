@@ -114,14 +114,13 @@ def main():
         largest_cluster = G.subgraph(max(nx.connected_components(G), key=len))     # Subgraph view of the graph, consists in the  
                                                                                    # largest connected component of the graph (mayor
                                                                                    # cantidad de vecinos conectados?)
-        
+        pos = nx.spring_layout(largest_cluster, dim=3)            # coordenadas de los nodos del largest cluster
         
         f_summary.write("{:8.3f}{:8d}{:8d}{:8d}\n".format(ts.time,len(largest_cluster),lam_atoms.shape[0],
            hex_atoms.shape[0]))
         
         for node in largest_cluster:
-            f_class.write("{:10d}{:8d}{:8d}\n".format(ts.frame+1,node,results[node]))  #indica a que clase pertenece cada nodo del 
-                                                                                       #largest cluster
+            f_class.write("{:^10d}{:^8d}{:^8d}{:^20.10f}{:^20.10f}{:^20.10f}\n".format(ts.frame+1,node,results[node],pos[node][0],pos[node][1],pos[node][2]))  #indica a que clase pertenece cada nodo del largest cluster
 
     f_summary.close()
     f_class.close()
