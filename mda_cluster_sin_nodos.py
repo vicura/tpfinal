@@ -97,7 +97,7 @@ def main():
         f_summary.write("{:8.3f}{:8d}{:8d}\n".format(ts.time,lam_atoms.shape[0],hex_atoms.shape[0]))
         
         for atom in u.atoms:
-            f_class.write("{:10d}{:8d}{:8d}{:^20.10f}{:^20.10f}{:^20.10f}\n".format(ts.frame,atom,results[atom.index],atom.position[1],atom.position[2],atom.position[3]))  #indica a que clase pertenece cada nodo del 
+            f_class.write("{:10d}{:8d}{:8d}{:^20.10f}{:^20.10f}{:^20.10f}\n".format(ts.frame,atom,results[atom.index],atom.position-[1],atom.position[2],atom.position[3]))  #indica a que clase pertenece cada nodo del 
                                                                                        #largest cluster
 
     f_summary.close()
