@@ -122,8 +122,7 @@ def main():
            hex_atoms.shape[0]))
         
         for node in largest_cluster:
-            f_class.write("{:^10d}{:^8d}{:^8d}{:^20.10f}{:^20.10f}{:^20.10f}\n".format(ts.frame+1,node,results[node],pos[node][0],pos[node][1],pos[node][2]))  #indica a que clase pertenece cada nodo 
-                                                                                                 # del largest cluster
+            f_class.write("{:^10d}{:^8d}{:^8d}{:^20.10f}{:^20.10f}{:^20.10f}\n".format(ts.frame+1,node,results[node],pos[node][0],pos[node][1],pos[node][2]))  #indica a que clase pertenece cada nodo del largest cluster
 
     f_summary.close()
     f_class.close()
