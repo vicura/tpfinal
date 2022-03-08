@@ -68,7 +68,7 @@ def main():
        #   classid = 'other'
        label = np.zeros(len(classes))   
        ndx = classes.index(classid)
-       label[ndx] = 1
+       label[ndx] = 1                #coloca un 1 en el lugar correspondiente a la clase encontrada
    
        
        u = mda.Universe(files[fcount],topology_format='LAMMPSDUMP')
