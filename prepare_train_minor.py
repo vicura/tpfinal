@@ -56,9 +56,9 @@ def main():
     # Progress
        print("Reading file: %s" % files[fcount])
     # Extract classid and create label
-       if 'lamelar' in files[fcount]:
+       if 'dump_lamelar' in files[fcount]:
           classid = 'lamelar'
-       elif 'hexagonal' in files[fcount]:
+       elif 'dump_hexagonal' in files[fcount]:
           classid = 'hexagonal' 
        elif 'desorden_hexagonal' in files[fcount]:
           classid = 'desorden_hexagonal'
