@@ -20,7 +20,7 @@ def main():
     args = get_args()
 
     # List of all classes
-    classes = ['lamelar','hexagonal']
+    classes = ['lamelar','hexagonal','desorden_lamelar','desorden_hexagonal']
     nclass = len(classes)
 
     #
@@ -60,6 +60,10 @@ def main():
           classid = 'lamelar'
        elif 'hexagonal' in files[fcount]:
           classid = 'hexagonal' 
+       elif 'desorden_hexagonal' in files[fcount]:
+          classid = 'desorden_hexagonal'
+       elif 'desorden_lamelar' in files[fcount]:
+          classid = 'desorden_lamelar'
        #else:
        #   classid = 'other'
        label = np.zeros(len(classes))   

@@ -13,7 +13,7 @@ def T_vs_N_lamela(archivo_N,archivo_thermo):
    thermo.readline()
 
    salida = open('salida.dat','w')
-   salida.write("# Temperatura, n_lam, n_hex\n")
+   salida.write("# Temperatura, n_lam, n_hex, n_desordlam, n_desordhex\n")
 
 
 
@@ -29,12 +29,14 @@ def T_vs_N_lamela(archivo_N,archivo_thermo):
                line =  ' '.join(line.split())
                line = line.split(' ')
                n_lam = line[2]
-               n_hex = line[3]                                   
+               n_hex = line[3]
+               n_desordlam = line[4]
+               n_desordhex = line[5]                                    
           #  for j in range(len(temp)):                                    
                #salida.write(str(int(temp[j][1]))+' '+str(n_lam)+' '+str(n_hex)+'\n')
             #else:
              #  break    
-               salida.write(str(int(temp[k][2]))+' '+str(n_lam)+' '+str(n_hex)+'\n')
+               salida.write(str(int(temp[k][2]))+' '+str(n_lam)+' '+str(n_hex)+' '+str(n_desordlam)+' '+str(n_desordhex)'\n')
                k += 10
          else:
             break

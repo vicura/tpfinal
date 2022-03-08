@@ -35,7 +35,7 @@ def main():
     f_summary = open(args.outname+'_summary.mda','w')
     f_class = open(args.outname+'_class.mda','w')
     
-    f_summary.write("# Time, n_lam, n_hex\n")
+    f_summary.write("# Time, n_lam, n_hex, n_desordlam, n_desordhex\n")
     f_class.write("# Frame, Átomo, Resultado, x, y, z\n")
 
     # Here is where we initialize the pointnet
@@ -90,11 +90,11 @@ def main():
         # Extract different atom types
         lam_atoms = np.where(results == 0)[0]
         hex_atoms = np.where(results == 1)[0]
-
-
+        desordlam_atoms = np.where(results == 2)[0]
+        desordhex_atoms = np.where(results == 3)[0]
 
         
-        f_summary.write("{:8.3f}{:8d}{:8d}\n".format(ts.time,lam_atoms.shape[0],hex_atoms.shape[0]))
+        f_summary.write("{:8.3f}{:8d}{:8d}\n".format(ts.time,lam_atoms.shape[0],hex_atoms.shape[0],desordlam_atoms.shape[0],desordhex_atoms.shape[0]))
         
         for atom in u.atoms:
             f_class.write("{:10d}{:8d}{:8d}{:^20.10f}{:^20.10f}{:^20.10f}\n".format(ts.frame,atom.index,results[atom.index],atom.position[0],atom.position[1],atom.position[2]))  #indica a que clase pertenece cada nodo del 
