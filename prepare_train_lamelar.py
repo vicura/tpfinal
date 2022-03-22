@@ -19,7 +19,7 @@ def main():
     args = get_args()
 
     # List of all classes
-    classes = ['lamelar','lamelar_desordenado']
+    classes = ['orden','desorden']
     nclass = len(classes)
 
     #
