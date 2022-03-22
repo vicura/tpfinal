@@ -92,7 +92,7 @@ def main():
         desord_atoms = np.where(results == 1)[0]
 
         
-        f_summary.write("{:8.3f}{:8d}{:8d}{:8d}{:8d}\n".format(ts.time,lam_atoms.shape[0],desord_atoms.shape[0]))
+        f_summary.write("{:8.3f}{:8d}{:8d}\n".format(ts.time,lam_atoms.shape[0],desord_atoms.shape[0]))
         
         for atom in u.atoms:
             f_class.write("{:10d}{:8d}{:8d}{:^20.10f}{:^20.10f}{:^20.10f}\n".format(ts.frame,atom.index,results[atom.index],atom.position[0],atom.position[1],atom.position[2]))  #indica a que clase pertenece cada nodo del 
