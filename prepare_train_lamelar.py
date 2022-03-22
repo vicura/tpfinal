@@ -56,9 +56,9 @@ def main():
     # Progress
        print("Reading file: %s" % files[fcount])
     # Extract classid and create label
-       if 'orden' in files[fcount]:
+       if 'dump.orden' in files[fcount]:
           classid = 'orden'
-       elif 'desorden' in files[fcount]:
+       elif 'dump.desorden' in files[fcount]:
           classid = 'desorden' 
        #else:
        #   classid = 'other'
