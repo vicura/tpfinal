@@ -25,10 +25,24 @@ def main():
     #
     list_dir = os.listdir(args.path)    
 
-          
-    files = [d for d in list_dir if 'lammpstrj' in d]     
+    desord = [d for d in list_dir if 'dump_lam0' in d]
+    
+    with open('dump.desorden', 'w') as outfile:
+       for fname in desord:
+          with open(fname) as infile:
+             for line in infile:
+                outfile.write(line)
+    
+    orden = [o for o in list_dir if 'lamelar.lammpstrj' in o]*4       
  
-
+    with open('dump.orden', 'w') as outfile:
+       for fname in orden:
+          with open(fname) as infile:
+             for line in infile:
+                outfile.write(line)
+               
+    files = ['dump.orden', 'dump.desorden']          
+               
     # Initialize lists for samples and labels
     samples = []
     labels = []
@@ -42,10 +56,10 @@ def main():
     # Progress
        print("Reading file: %s" % files[fcount])
     # Extract classid and create label
-       if 'lamelar' in files[fcount]:
-          classid = 'lamelar'
-       elif 'hexagonal' in files[fcount]:
-          classid = 'hexagonal' 
+       if 'orden' in files[fcount]:
+          classid = 'orden'
+       elif 'desorden' in files[fcount]:
+          classid = 'desorden' 
        #else:
        #   classid = 'other'
        label = np.zeros(len(classes))   
