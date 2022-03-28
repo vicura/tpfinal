@@ -19,7 +19,7 @@ def main():
     args = get_args()
 
     # List of all classes
-    classes = ['orden','desorden']
+    classes = ['lamelar_ordenado','desordenado','lamelar']
     nclass = len(classes)
 
     #
@@ -33,15 +33,24 @@ def main():
              for line in infile:
                 outfile.write(line)
     
-    orden = [o for o in list_dir if 'lamelar.lammpstrj' in o]*4       
+    lam = [o for o in list_dir if 'pre_ord_int.lammpstrj' in o]*4       
  
-    with open('dump.orden', 'w') as outfile:
+    with open('dump.lam', 'w') as outfile:
+       for fname in orden:
+          with open(fname) as infile:
+             for line in infile:
+                outfile.write(line)
+                
+                
+    lam_ord = [o for o in list_dir if 'ord_fin.lammpstrj' in o]*4       
+ 
+    with open('dump.lam_orden', 'w') as outfile:
        for fname in orden:
           with open(fname) as infile:
              for line in infile:
                 outfile.write(line)
                
-    files = ['dump.orden', 'dump.desorden']          
+    files = ['dump.lam','dump.lam_orden', 'dump.desorden']          
                
     # Initialize lists for samples and labels
     samples = []
@@ -56,10 +65,12 @@ def main():
     # Progress
        print("Reading file: %s" % files[fcount])
     # Extract classid and create label
-       if 'dump.orden' in files[fcount]:
-          classid = 'orden'
+       if 'dump.lam_orden' in files[fcount]:
+          classid = 'lamelar_ordenado'
        elif 'dump.desorden' in files[fcount]:
-          classid = 'desorden' 
+          classid = 'desordenado' 
+       elif 'dump.lam' in files[fcount]:
+          classid = 'lamelar'
        #else:
        #   classid = 'other'
        label = np.zeros(len(classes))   
