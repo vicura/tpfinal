@@ -28,7 +28,7 @@ if __name__ == '__main__':
     parser.add_argument('--labels', help='labels corresponding to dataset (numpy format)', type=str, required=True)
     parser.add_argument('--weights', help='folder to save weights to', type=str, required=True)
     parser.add_argument('--learning_rate',help='learning rate',type=float,required=False,default=0.001)
-    parser.add_argument('--nepochs', help='number of epochs for training', type=int, required=False,default=100)
+    parser.add_argument('--nepochs', help='number of epochs for training', type=int, required=False,default=200)
 
     args = parser.parse_args()
 

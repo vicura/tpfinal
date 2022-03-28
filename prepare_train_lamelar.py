@@ -19,7 +19,7 @@ def main():
     args = get_args()
 
     # List of all classes
-    classes = ['lamelar_ordenado','desordenado','lamelar']
+    classes = ['lam_ord','desord','lam']
     nclass = len(classes)
 
     #
@@ -66,11 +66,11 @@ def main():
        print("Reading file: %s" % files[fcount])
     # Extract classid and create label
        if 'dump.lam_orden' in files[fcount]:
-          classid = 'lamelar_ordenado'
+          classid = 'lam_ord'
        elif 'dump.desorden' in files[fcount]:
-          classid = 'desordenado' 
+          classid = 'desord' 
        elif 'dump.lam' in files[fcount]:
-          classid = 'lamelar'
+          classid = 'lam'
        #else:
        #   classid = 'other'
        label = np.zeros(len(classes))   
