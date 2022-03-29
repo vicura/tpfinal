@@ -19,7 +19,7 @@ def main():
     args = get_args()
 
     # List of all classes
-    classes = ['lam_ord','desord','lam']
+    classes = ['lam','lam_ord','desord']
     nclass = len(classes)
 
     #
@@ -149,8 +149,8 @@ def main():
     np.save(args.out_name + '_scaled_shuffled_equal_labels.npy', labels)
 
     # Finalize and print avg/stdev nneigh
-    #print("Mean nneigh: %f" % mean)
-    #print("Stdev nneigh: %f" % ((math.sqrt(m2/count))))
+    print("Mean nneigh: %f" % mean)
+    print("Stdev nneigh: %f" % ((math.sqrt(m2/count))))
   
 def get_args():
 
