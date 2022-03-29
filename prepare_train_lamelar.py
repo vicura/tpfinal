@@ -25,7 +25,7 @@ def main():
     #
     list_dir = os.listdir(args.path)    
 
-    desord = [d for d in list_dir if 'dump_lam0' in d]
+    desord = [d for d in list_dir if 'dump_1' in d]
     
     with open('dump.desorden', 'w') as outfile:
        for fname in desord:
