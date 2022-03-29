@@ -33,7 +33,9 @@ def main():
              for line in infile:
                 outfile.write(line)
     
-    lam = [o for o in list_dir if 'pre_ord_int.lammpstrj' in o]*4       
+    lam = 
+    
+    [o for o in list_dir if 'pre_ord_int.lammpstrj' in o]*4       
  
     with open('dump.lam', 'w') as outfile:
        for fname in lam:
@@ -42,7 +44,7 @@ def main():
                 outfile.write(line)
                 
                 
-    lam_ord = [o for o in list_dir if 'ord_fin.lammpstrj' in o]*4       
+    lam_ord = [d for d in list_dir if 'ord_fin' in d]    
  
     with open('dump.lam_orden', 'w') as outfile:
        for fname in lam_ord:
