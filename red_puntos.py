@@ -14,7 +14,7 @@ from keras.layers import Conv2D, MaxPooling2D
 from keras.callbacks import ModelCheckpoint, EarlyStopping
 from keras import regularizers
 from scikeras.wrappers import KerasClassifier
-
+import matplotlib.pyplot as plt
 
 
 class PointNet:
@@ -131,7 +131,8 @@ class PointNet:
         PointNet_train = red.fit(train_samples, train_labels, batch_size = self.batch_size, epochs = self.epochs, verbose= 1, 
             callbacks=[early_stop], validation_data=(valid_samples, valid_labels))
            
-           
+        red.save("pointnet_modelo_entrenado.h5") 
+          
            #Evaluo
         mse_test = red.evaluate(test_samples, test_labels)
 
@@ -184,9 +185,13 @@ class PointNet:
         return 
         
         
-   # def predigo_con_red(self, samples, step):
+    def predigo_con_red(self, samples, step):
        
-    #   red =        
+       red =  keras.models.load_model("pointnet_modelo_entrenado.h5")      
+       
+       pred = red.predict(samples, step)
+       
+       return pred
                
         
     # Function modified from https://github.com/charlesq34/pointnet/blob/master/provider.py
