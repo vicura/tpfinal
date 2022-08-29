@@ -16,6 +16,8 @@ from keras.layers import Dense, Flatten, Dropout
 from keras.layers import Conv2D, MaxPooling2D
 from keras.callbacks import EarlyStopping
 from keras import regularizers
+import tensorflow.python.util.deprecation as deprecation
+deprecation._PRINT_DEPRECATION_WARNINGS = False
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import ConfusionMatrixDisplay
@@ -23,9 +25,9 @@ import matplotlib.pyplot as plt
 from tensorflow.python.client import device_lib
 from red_puntos import PointNet
 
-os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID" 
-os.environ["CUDA_VISIBLE_DEVICES"]="1"
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+#os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID" 
+#os.environ["CUDA_VISIBLE_DEVICES"]="0"
+#os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 
 
@@ -65,9 +67,6 @@ def main():
    print('valid shape: ' + str(valid_samples.shape))
    print('label shape: ' + str(valid_labels.shape))   
    
-   os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID" 
-   os.environ["CUDA_VISIBLE_DEVICES"]="1"
-   os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
    
 
    #red = net.defino_red(1e-5,0.3,n_classes,train_samples[1].shape)

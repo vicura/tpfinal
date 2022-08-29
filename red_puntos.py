@@ -4,7 +4,7 @@ import numpy as np
 from sklearn import preprocessing
 import sys, argparse
 import os
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+#os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 import tf_util
 import tensorflow as tf
 from tensorflow import keras
@@ -12,9 +12,12 @@ from keras.models import Sequential
 from keras.layers import Dense, Flatten, Dropout
 from keras.layers import Conv2D, MaxPooling2D
 from keras.callbacks import ModelCheckpoint, EarlyStopping
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import ConfusionMatrixDisplay
 from keras import regularizers
 from scikeras.wrappers import KerasClassifier
 import matplotlib.pyplot as plt
+
 
 
 class PointNet:
@@ -33,7 +36,7 @@ class PointNet:
         self.n_classes = n_classes
 
 
-        os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+       # os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
     # Model definition for pointnet
     def pointnet(self, arg, rate, n_classes, input_shape):
@@ -122,7 +125,7 @@ class PointNet:
            # model callback
 
         early_stop = EarlyStopping(monitor='val_accuracy',
-                           patience=10,
+                           patience=3,
                            restore_best_weights=True,
                            mode='max')
                            
@@ -133,11 +136,13 @@ class PointNet:
            
         red.save("pointnet_modelo_entrenado.h5") 
           
-           #Evaluo
+        #Evaluo
         mse_test = red.evaluate(test_samples, test_labels)
 
         print('mse_test: ' + str(mse_test))
-       
+        
+        #Plot train history
+        
         for key in PointNet_train.history.keys():
            print(key)
     
@@ -159,28 +164,27 @@ class PointNet:
         plt.plot(epochs, val_loss, label='Validation loss')
         plt.title('Training and validation loss')
         plt.legend()
+        plt.savefig('train_history.png')
         plt.show()
    
-   # Plot non-normalized confusion matrix
-        titles_options = [
-            ("Confusion matrix, without normalization", None),
-            ("Normalized confusion matrix", "true"),
-            ]
-        for title, normalize in titles_options:
-              disp = ConfusionMatrixDisplay.from_estimator(
-              PointNet_train,
-              test_samples,
-              test_labels,
-        #display_labels=class_names,
-              cmap=plt.cm.Blues,
-              normalize=normalize,
-                )
-              disp.ax_.set_title(title)
-
-        print(title)
-        print(disp.confusion_matrix)
-
-        plt.show()        
+        # Plot confusion matrix
+        
+        predictions = red.predict(test_samples)
+        predicted_labels = np.argmax(predictions, axis=1)
+        test_labels2 =  np.argmax(test_labels, axis=1)
+        
+        
+        cm = confusion_matrix(test_labels, predicted_labels)
+        disp = ConfusionMatrixDisplay(confusion_matrix=cm,
+                      cmap=plt.cm.Blues,
+                      normalize=normalize)
+        
+        print("Confusion matrix")
+        print(cm)                      
+        disp.plot()
+        plt.savefig('cm.png')
+        plt.show()
+     
         
         return 
         
