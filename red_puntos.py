@@ -174,18 +174,29 @@ class PointNet:
         #print(predicted_labels, test_labels2)
         
         print("Confusion matrix")
+        confusion_matriz = confusion_matrix(test_labels2, predicted_labels)
+        print(confusion_matriz)
         confusion_matrices = multilabel_confusion_matrix(test_labels2, predicted_labels)
         print(confusion_matrices)
-        plt.figure(figsize=(12, 6))
+        
+        
+        disp = ConfusionMatrixDisplay(confusion_matrix, display_labels=test_labels)
+        disp.plot()
+        plt.show()
+        
+        
+        
+        f, axes = plt.subplots(1, 3, figsize=(12, 3))
         for n,confusion_matrix in enumerate(confusion_matrices):
-           n = n+1
-           plt.subplot(1,3,n)
            disp = ConfusionMatrixDisplay(confusion_matrix, display_labels=test_labels)
-           disp.plot()
-           plt.show()
-           
-           plt.show()
+           disp.plot(ax=axes[i], xticks_rotation=45)
+           disp.im_.colorbar.remove()
+        f.text(0.4, 0.1, 'Predicted label', ha='left')
+        plt.subplots_adjust(wspace=0.40, hspace=0.1)
+        f.colorbar(disp.im_, ax=axes)
+        plt.show()
         plt.savefig('cm.png')
+        
         # Classification report 
         print(classification_report(test_labels2, predicted_labels))
         
