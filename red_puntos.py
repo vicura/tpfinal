@@ -176,7 +176,7 @@ class PointNet:
         print("Confusion matrix")
         confusion_matrices = multilabel_confusion_matrix(test_labels2, predicted_labels)
         plt.figure(figsize=(12, 6))
-        for confusion_matrix in confusion_matrices:
+        for n,confusion_matrix in enumerate(confusion_matrices):
            disp = ConfusionMatrixDisplay(confusion_matrix, display_labels=test_labels)
            plt.subplot(1,3,n)
            plt.plot(disp, include_values=True, cmap="viridis", ax=None, xticks_rotation="vertical")
