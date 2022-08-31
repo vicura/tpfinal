@@ -10,11 +10,12 @@ from keras.models import Sequential
 from keras.layers import Dense, Flatten, Dropout
 from keras.layers import Conv2D, MaxPooling2D
 from keras.callbacks import ModelCheckpoint, EarlyStopping
-from sklearn.metrics import confusion_matrix
+from sklearn.metrics import multilabel_confusion_matrix
 from sklearn.metrics import ConfusionMatrixDisplay
 from keras import regularizers
 from scikeras.wrappers import KerasClassifier
 import matplotlib.pyplot as plt
+from sklearn.metrics import classification_report
 
 
 
@@ -137,6 +138,7 @@ class PointNet:
 
         print('mse_test: ' + str(mse_test))
         
+
         #Plot train history
         
         for key in PointNet_train.history.keys():
@@ -165,13 +167,13 @@ class PointNet:
    
         # Plot confusion matrix
         
-        predictions = red.predict_classes(test_samples, batch_size=32)
-        #predicted_labels = np.argmax(predictions, axis=1)       
+        predictions = red.predict(test_samples)
+        predicted_labels = np.argmax(predictions, axis=1)       
         test_labels2 =  np.argmax(test_labels, axis=1)
-        print(predictions.shape, test_labels2.shape)
+        print(predicted_labels.shape, test_labels2.shape)
         print(predicted_labels, test_labels2)
         
-        cm = confusion_matrix(test_labels, predicted_labels)
+        cm = multilabel_confusion_matrix(test_labels2, predicted_labels)
         disp = ConfusionMatrixDisplay(confusion_matrix=cm,
                       cmap=plt.cm.Blues,
                       normalize=normalize)
@@ -181,7 +183,11 @@ class PointNet:
         disp.plot()
         plt.savefig('cm.png')
         #plt.show()
-     
+        
+        # Classification report 
+        print(classification_report(test_labels2, predicted_labels))
+        
+        
         red.save_weights("pointnet_weights.ckpt")         
         return 
         
