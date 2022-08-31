@@ -1,6 +1,7 @@
 #/usr/bin/python
 
 import numpy as np
+import seaborn as sn
 from sklearn import preprocessing
 import sys, argparse
 import tf_util
@@ -16,6 +17,7 @@ from keras import regularizers
 from scikeras.wrappers import KerasClassifier
 import matplotlib.pyplot as plt
 from sklearn.metrics import classification_report
+from pretty_confusion_matrix import pp_matrix_from_data
 
 
 
@@ -181,9 +183,25 @@ class PointNet:
 
         fig, ax = plt.subplots(figsize=(8, 6))
         disp = ConfusionMatrixDisplay(cm, display_labels=test_labels)
-        disp.plot(include_values=True, cmap='viridis', xticks_rotation='horizontal', values_format=None, ax=ax, colorbar=True)
+        disp.plot(include_values=True, cmap='viridis', xticks_rotation='horizontal', ax=ax, colorbar=True)
         plt.show()
         plt.savefig('cm.png')
+        
+        
+        
+        # Using Seaborn heatmap to create the plot
+        fx = sn.heatmap(cm, annot=True, cmap='turbo')
+
+         # labels the title and x, y axis of plot
+        fx.set_title( 'Confusion Matrix \n\n');
+        fx.set_xlabel('Predicted Values')
+        fx.set_ylabel('Actual Values ');
+
+        # labels the boxes
+        fx.xaxis.set_ticklabels(['0','1','2'])
+        fx.yaxis.set_ticklabels(['0','1','2'])
+        plt.savefig('cm_sn.png')
+        plt.show()
         
         # Classification report 
         print(classification_report(test_labels2, predicted_labels))
