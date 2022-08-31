@@ -10,7 +10,7 @@ from keras.models import Sequential
 from keras.layers import Dense, Flatten, Dropout
 from keras.layers import Conv2D, MaxPooling2D
 from keras.callbacks import ModelCheckpoint, EarlyStopping
-from sklearn.metrics import multilabel_confusion_matrix
+from sklearn.metrics import multilabel_confusion_matrix, confusion_matrix
 from sklearn.metrics import ConfusionMatrixDisplay
 from keras import regularizers
 from scikeras.wrappers import KerasClassifier
@@ -191,6 +191,9 @@ class PointNet:
            disp = ConfusionMatrixDisplay(confusion_matrix, display_labels=test_labels)
            disp.plot(ax=axes[i], xticks_rotation=45)
            disp.im_.colorbar.remove()
+           disp.ax_.set_xlabel('')
+           if i!=0:
+              disp.ax_.set_ylabel('')
         f.text(0.4, 0.1, 'Predicted label', ha='left')
         plt.subplots_adjust(wspace=0.40, hspace=0.1)
         f.colorbar(disp.im_, ax=axes)
