@@ -92,8 +92,7 @@ def get_args():
 
 
 if __name__ == '__main__':
-   with Pool() as pool:
-      pool.map(main(), range(8))
+   main()
 
 
 
