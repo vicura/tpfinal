@@ -180,7 +180,7 @@ class PointNet:
            n = n+1
            disp = ConfusionMatrixDisplay(confusion_matrix, display_labels=test_labels)
            plt.subplot(1,3,n)
-           plt.plot(disp, cmap="viridis")
+           plt.plot(disp)
            plt.show()
                            
         plt.savefig('cm.png')
