@@ -180,7 +180,7 @@ class PointNet:
         
         plt.figure()
         disp = ConfusionMatrixDisplay(cm, display_labels=test_labels)
-        disp.plot(include_values=True, cmap='viridis', xticks_rotation='horizontal', values_format=None, ax=None, colorbar=True, im_kw=None)
+        disp.plot(include_values=True, cmap='viridis', xticks_rotation='horizontal', values_format=None, ax=None, colorbar=True)
         plt.show()
         plt.savefig('cm.png')
         
