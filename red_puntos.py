@@ -178,9 +178,10 @@ class PointNet:
         plt.figure(figsize=(12, 6))
         for n,confusion_matrix in enumerate(confusion_matrices):
            n = n+1
-           disp = ConfusionMatrixDisplay(confusion_matrix, display_labels=test_labels)
+           
            plt.subplot(1,3,n)
-           plt.plot(disp)
+           disp = ConfusionMatrixDisplay(confusion_matrix, display_labels=test_labels)
+           disp.plot()
            plt.show()
                            
         plt.savefig('cm.png')
