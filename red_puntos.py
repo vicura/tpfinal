@@ -141,8 +141,8 @@ class PointNet:
 
         #Plot train history
         
-        for key in PointNet_train.history.keys():
-           print(key)
+        #for key in PointNet_train.history.keys():
+           #print(key)
     
         accuracy = PointNet_train.history['accuracy']
         val_accuracy = PointNet_train.history['val_accuracy']
@@ -175,8 +175,7 @@ class PointNet:
         
         cm = multilabel_confusion_matrix(test_labels2, predicted_labels)
         disp = ConfusionMatrixDisplay(confusion_matrix=cm,
-                      cmap=plt.cm.Blues,
-                      normalize=normalize)
+                      cmap=plt.cm.Blues)
         
         print("Confusion matrix")
         print(cm)                      
