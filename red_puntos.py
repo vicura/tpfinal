@@ -170,12 +170,11 @@ class PointNet:
         predictions = red.predict(test_samples)
         predicted_labels = np.argmax(predictions, axis=1)       
         test_labels2 =  np.argmax(test_labels, axis=1)
-        print(predicted_labels.shape, test_labels2.shape)
-        print(predicted_labels, test_labels2)
+        #print(predicted_labels.shape, test_labels2.shape)
+        #print(predicted_labels, test_labels2)
         
         cm = multilabel_confusion_matrix(test_labels2, predicted_labels)
-        disp = ConfusionMatrixDisplay(confusion_matrix=cm,
-                      cmap=plt.cm.Blues)
+        disp = ConfusionMatrixDisplay(confusion_matrix=cm)
         
         print("Confusion matrix")
         print(cm)                      
