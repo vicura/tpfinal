@@ -181,8 +181,8 @@ class PointNet:
         
 
         fig, ax = plt.subplots(figsize=(8, 6))
-        disp = ConfusionMatrixDisplay(cm, display_labels=test_labels)
-        disp.plot(include_values=True, cmap='viridis', xticks_rotation='horizontal', ax=ax, colorbar=True)
+        disp = ConfusionMatrixDisplay(cm)
+        disp.plot(ax=ax, colorbar=True)
         plt.show()
         plt.savefig('cm.png')
         
