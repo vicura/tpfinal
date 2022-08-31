@@ -173,12 +173,15 @@ class PointNet:
         #print(predicted_labels.shape, test_labels2.shape)
         #print(predicted_labels, test_labels2)
         
-        cm = multilabel_confusion_matrix(test_labels2, predicted_labels)
-        disp = ConfusionMatrixDisplay(confusion_matrix=cm)
-        
         print("Confusion matrix")
-        print(cm)                      
-        disp.plot()
+        confusion_matrices = multilabel_confusion_matrix(test_labels2, predicted_labels)
+        plt.figure(figsize=(12, 6))
+        for confusion_matrix in confusion_matrices:
+           disp = ConfusionMatrixDisplay(confusion_matrix, display_labels=test_labels)
+           plt.subplot(1,3,n)
+           plt.plot(disp, include_values=True, cmap="viridis", ax=None, xticks_rotation="vertical")
+           plt.show()
+                           
         plt.savefig('cm.png')
         #plt.show()
         
@@ -189,7 +192,7 @@ class PointNet:
         red.save_weights("pointnet_weights.ckpt")         
         return 
         
-        
+        )
     def predigo_con_red(self, arg, rate, n_classes, input_shape, samples, step):
        
        red = self.defino_red(self.arg,self.rate,train_labels.shape[-1],train_samples[1].shape)     
