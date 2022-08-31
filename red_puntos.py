@@ -166,10 +166,10 @@ class PointNet:
         # Plot confusion matrix
         
         predictions = red.predict(test_samples)
-        predicted_labels = np.argmax(predictions, axis=1)
-        print(predicted_labels)
+        predicted_labels = np.argmax(predictions, axis=1)       
         test_labels2 =  np.argmax(test_labels, axis=1)
-        print(test_labels2)
+        print(predicted_labels.shape, test_labels2.shape)
+        print(predicted_labels, test_labels2)
         
         cm = confusion_matrix(test_labels, predicted_labels)
         disp = ConfusionMatrixDisplay(confusion_matrix=cm,
