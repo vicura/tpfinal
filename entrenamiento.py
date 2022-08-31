@@ -21,10 +21,10 @@ from sklearn.metrics import ConfusionMatrixDisplay
 import matplotlib.pyplot as plt
 from tensorflow.python.client import device_lib
 from red_puntos import PointNet
-
-#os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID" 
-#os.environ["CUDA_VISIBLE_DEVICES"]="0"
-#os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+import os
+os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID" 
+os.environ["CUDA_VISIBLE_DEVICES"]="0"
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 
 

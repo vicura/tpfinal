@@ -3,8 +3,6 @@
 import numpy as np
 from sklearn import preprocessing
 import sys, argparse
-import os
-#os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 import tf_util
 import tensorflow as tf
 from tensorflow import keras
@@ -35,8 +33,6 @@ class PointNet:
         self.arg = arg
         self.n_classes = n_classes
 
-
-       # os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
     # Model definition for pointnet
     def pointnet(self, arg, rate, n_classes, input_shape):
@@ -125,7 +121,7 @@ class PointNet:
            # model callback
 
         early_stop = EarlyStopping(monitor='val_accuracy',
-                           patience=3,
+                           patience=2,
                            restore_best_weights=True,
                            mode='max')
                            
@@ -171,8 +167,9 @@ class PointNet:
         
         predictions = red.predict(test_samples)
         predicted_labels = np.argmax(predictions, axis=1)
+        print(predicted_labels)
         test_labels2 =  np.argmax(test_labels, axis=1)
-        
+        print(test_labels2)
         
         cm = confusion_matrix(test_labels, predicted_labels)
         disp = ConfusionMatrixDisplay(confusion_matrix=cm,
