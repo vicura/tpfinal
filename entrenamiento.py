@@ -73,6 +73,7 @@ def main():
    #Entreno                        
    PointNet_train = net.entreno_red(train_samples, train_labels, valid_samples, valid_labels, test_samples, test_labels, args.batch_size, args.nepochs)
    
+   return
 
    
 def get_args():

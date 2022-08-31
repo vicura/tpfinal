@@ -175,23 +175,23 @@ class PointNet:
         
         print("Confusion matrix")
         confusion_matrices = multilabel_confusion_matrix(test_labels2, predicted_labels)
+        print(confusion_matrices)
         plt.figure(figsize=(12, 6))
         for n,confusion_matrix in enumerate(confusion_matrices):
            n = n+1
-           
            plt.subplot(1,3,n)
            disp = ConfusionMatrixDisplay(confusion_matrix, display_labels=test_labels)
            disp.plot()
            plt.show()
-                           
+           
+           plt.show()
         plt.savefig('cm.png')
-        #plt.show()
-        
         # Classification report 
         print(classification_report(test_labels2, predicted_labels))
         
         
         red.save_weights("pointnet_weights.ckpt")         
+        
         return 
         
         
