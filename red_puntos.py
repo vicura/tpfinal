@@ -192,7 +192,7 @@ class PointNet:
         red.save_weights("pointnet_weights.ckpt")         
         return 
         
-        )
+        
     def predigo_con_red(self, arg, rate, n_classes, input_shape, samples, step):
        
        red = self.defino_red(self.arg,self.rate,train_labels.shape[-1],train_samples[1].shape)     
