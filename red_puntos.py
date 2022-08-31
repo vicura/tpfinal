@@ -134,7 +134,7 @@ class PointNet:
         PointNet_train = red.fit(train_samples, train_labels, batch_size = self.batch_size, epochs = self.epochs, verbose= 1, 
             callbacks=[early_stop], validation_data=(valid_samples, valid_labels))
            
-        red.save("pointnet_modelo_entrenado.h5") 
+
           
         #Evaluo
         mse_test = red.evaluate(test_samples, test_labels)
@@ -165,7 +165,7 @@ class PointNet:
         plt.title('Training and validation loss')
         plt.legend()
         plt.savefig('train_history.png')
-        plt.show()
+        #plt.show()
    
         # Plot confusion matrix
         
@@ -183,15 +183,19 @@ class PointNet:
         print(cm)                      
         disp.plot()
         plt.savefig('cm.png')
-        plt.show()
+        #plt.show()
      
-        
+        red.save_weights("pointnet_weights.ckpt")         
         return 
         
         
-    def predigo_con_red(self, samples, step):
+    def predigo_con_red(self, arg, rate, n_classes, input_shape, samples, step):
        
-       red =  keras.models.load_model("pointnet_modelo_entrenado.h5")      
+       red = self.defino_red(self.arg,self.rate,train_labels.shape[-1],train_samples[1].shape)     
+       
+       red = red.load_weights("pointnet_weights.ckpt")
+       
+       red.summary()
        
        pred = red.predict(samples, step)
        

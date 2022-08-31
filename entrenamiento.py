@@ -2,9 +2,6 @@ import numpy as np
 import sys, argparse
 import os
 import json
-import plotly
-import plotly.express as px
-import nsgrid_rsd as nsgrid
 import multiprocessing
 from multiprocessing import Pool
 import time

@@ -28,11 +28,9 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 # Función modificada de https://github.com/rsdefever/GenStrIde/blob/master/scripts/mda_cluster.py
 
-def main():
+def evaluo(file_trj,nclass,cutoff,maxneigh):     
     
-    args = get_args()      
-    
-    u = mda.Universe(args.path,topology_format='LAMMPSDUMP')
+    u = mda.Universe(file_trj,topology_format='LAMMPSDUMP')
     
     resultados = []
 
@@ -41,7 +39,7 @@ def main():
     for ts in u.trajectory:
         # Genero una lista de vecinos (dentro de las coordenadas especificadas)
         
-        nlist = nsgrid.FastNS(args.cutoff*1.0,u.atoms.positions,ts.dimensions).self_search()
+        nlist = nsgrid.FastNS(cutoff*1.0,u.atoms.positions,ts.dimensions).self_search()
 
         # Extraigo la información requerida 
         ndxs = nlist.get_indices()
@@ -60,10 +58,10 @@ def main():
             if nneigh > 0:
                 np_dxs /= np.linalg.norm(np_dxs[0])
             # Corrijo el tamaño del input, sumando o quitando puntos
-            if nneigh < args.maxneigh:
-                np_dxs = np.pad(np_dxs,[(0, args.maxneigh-nneigh), (0, 0)],'constant',)
-            elif nneigh > args.maxneigh:
-                np_dxs = np_dxs[:args.maxneigh]
+            if nneigh < maxneigh:
+                np_dxs = np.pad(np_dxs,[(0, maxneigh-nneigh), (0, 0)],'constant',)
+            elif nneigh > maxneigh:
+                np_dxs = np_dxs[:maxneigh]
 
             # Append sample info
             samples.append(np_dxs)
@@ -79,119 +77,21 @@ def main():
         resultados.append(predicted_classes)    # Guardo en lista la predicción sobre
                                                 # la clase de cada átomo del 
                                                 # sistema
-
-    return np.asarray(resultados)
-
-
-def grafico_resultados(prueba,archivo_dat,archivo_csv):
-
-   class_lam = []
-   class_lam_ord = []
-   class_lam_desord = []
-
-   for i in prueba:
-     lam = 0
-     lam_ord = 0
-     lam_desord = 0
-     for j in i:
-       if j == 0:
-         lam += 1
-       if j == 1:
-         lam_ord += 1 
-       if j == 2:
-         lam_desord += 1
-     class_lam.append(lam/2048)                        # Divido por el número de 
-     class_lam_ord.append(lam_ord/2048)                # partículas totales para
-     class_lam_desord.append(lam_desord/2048)          # tener la fracción de 
-                                                       # partículas por frame de 
-                                                       # cada clase
-
-   frame = [n for n,i in enumerate(prueba)]
-   print(frame)
-
-   with open(archivo_dat, 'r') as in_file:
-      with open(archivo_csv, 'w') as out_file:
-         in_file.readline()
-         for i in range(10000000):
-            f = in_file.readline()
-            if f != '':
-                  f = f.rstrip('        \n')
-                  f = f.replace('   ',',')
-                  f = f.split(',')
-                  f = list(filter(('').__ne__, f))
-                  f = ",".join(map(str, f))           
-                  out_file.write(f)
-                  out_file.write("\n")
-           else:
-                  break
-   data = pd.read_csv(archivo_csv,skiprows=1,sep=',',header=None,names=['Step','KEng','T','Volume'])
-   print(data)
-
-   ml = pd.DataFrame({'lamelar': class_lam[:-1], 
-                   'lamelar ordenado': class_lam_ord[:-1], 
-                   'lamelar desordenado' : class_lam_desord[:-1],
-                   'temperatura': data['T'],
-                   'volumen': data['Volume']})
-
-   print(ml)
+    res = np.asarray(resultados)
+    print(res.shape)
+    
+    return res
 
 
-   fig = make_subplots(specs=[[{"secondary_y": True}]])
-   fig.add_trace(
-      go.Scatter(x=ml['temperatura'], y=ml['volumen'],
-                 mode='markers',
-                 name='quenching/enfriamiento<br>lamelar',
-                 marker_color = "rgb(215,48,39)"),
-      secondary_y=False,
-      )
-   fig.add_trace(
-       go.Scatter(x=ml['temperatura'],y=ml['lamelar'], mode='markers',
-               name='lamelar',
-               marker_color ="rgb(253,174,97)"),
-               secondary_y=True,
-       )
-   fig.add_trace(
-       go.Scatter(x=ml['temperatura'],y=ml['lamelar ordenado'], mode='markers',
-               name='lamelar ordenado',
-               marker_color ="rgb(116,173,209)"),
-               secondary_y=True,
-       )
-    fig.add_trace(
-       go.Scatter(x=ml['temperatura'],y=ml['lamelar desordenado'], mode='markers',
-               name='fase isotrópica',
-               marker_color ="rgb(49,54,149)"),
-               secondary_y=True,
-       )
-   fig.update_traces(marker_size=4)
-   # Set x-axis title
-   fig.update_xaxes(title_text="Temperatura",range=[50,550])
-   fig.update_yaxes(title_text="Volumen", secondary_y=False)
-   fig.update_yaxes(title_text="Fracción de partículas", secondary_y=True)
-   fig.update_layout(
-    autosize=False,
-    width=1000,
-    height=800,legend=dict(
-    yanchor="top",
-    y=0.6,
-    xanchor="left",
-    x=0.001,
-    font=dict(
-            size=12,
-            color="black"
-        )))
-   fig.show()
+
+def main(parametros):       
+
+   args = get_args() 
+
+   prueba = evaluo(args.file_trj,args.nclass,args.cutoff,args.maxneigh,args.outname)
+
    
-   return
-
-def main(parametros):
-
-   args = get_args()        
-
-   prueba = pre_eval(archivo_lammpstrj,3,2.0,50,prueba)
-   
-   grafico = grafico_resultados(prueba,archivo_dat,archivo_csv)
-   
-   return 
+   return prueba
    
    
    
@@ -201,10 +101,9 @@ def get_args():
     parser = argparse.ArgumentParser(description='Uses MDAnalysis and PointNet to identify largest cluster of solid-like atoms')
     parser.add_argument('--nclass', help='number of classes', type=int, required=True)
     parser.add_argument('--file_trj', help='path to files', type=str, required=True)
-    parser.add_argument('--file_dat', help='path to files', type=str, required=True)
+    parser.add_argument('--file_csv', help='path to files', type=str, required=True)
     parser.add_argument('--cutoff', help='neighbor cutoff distance (in nm)', type=float, required=True)
     parser.add_argument('--maxneigh', help='max number of neighbors', type=int, required=True)
-    parser.add_argument('--outname', help='output file name', type=str, required=True)
     args = parser.parse_args()
     
     return args
