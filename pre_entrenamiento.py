@@ -5,19 +5,6 @@ import os
 import sys
 import MDAnalysis as mda
 import argparse
-import plotly
-import plotly.express as px
-import nsgrid_rsd as nsgrid
-from sklearn.model_selection import train_test_split
-import tensorflow as tf
-from tensorflow import keras
-from keras.models import Sequential
-from keras.layers import Dense, Flatten, Dropout
-from keras.layers import Conv2D, MaxPooling2D
-from keras.callbacks import ModelCheckpoint, EarlyStopping
-from keras import regularizers
-from sklearn.model_selection import GridSearchCV
-from scikeras.wrappers import KerasClassifier
 import multiprocessing
 from multiprocessing import Pool
 import time
