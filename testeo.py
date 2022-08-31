@@ -78,6 +78,7 @@ def evaluo(file_trj,nclass,cutoff,maxneigh):
                                                 # la clase de cada átomo del 
                                                 # sistema
     res = np.asarray(resultados)
+    
     print(res.shape)
     
     return res

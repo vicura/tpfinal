@@ -17,7 +17,6 @@ from keras import regularizers
 from scikeras.wrappers import KerasClassifier
 import matplotlib.pyplot as plt
 from sklearn.metrics import classification_report
-from pretty_confusion_matrix import pp_matrix_from_data
 
 
 
