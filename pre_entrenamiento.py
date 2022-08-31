@@ -8,7 +8,7 @@ import argparse
 import multiprocessing
 from multiprocessing import Pool
 import time
-
+import nsgrid_rsd as nsgrid
 
 """Para que la red reconozca cada mesofase que adopta el sistema, le doy en el entrenamiento varias muestras de cada una: lamelar desordenada, lamelar y lamelar ordenada.
 
