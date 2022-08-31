@@ -180,7 +180,7 @@ class PointNet:
         print(confusion_matrices)
         
         
-        disp = ConfusionMatrixDisplay(confusion_matrix, display_labels=test_labels)
+        disp = ConfusionMatrixDisplay(confusion_matriz, display_labels=test_labels)
         disp.plot()
         plt.show()
         
