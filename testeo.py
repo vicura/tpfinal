@@ -29,7 +29,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 # Función modificada de https://github.com/rsdefever/GenStrIde/blob/master/scripts/mda_cluster.py
 
-def evaluo(file_trj,nclasses,cutoff,maxneigh):     
+def evaluo(file_trj,nclasses,cutoff,maxneigh,outname):     
     
     u = mda.Universe(file_trj,topology_format='LAMMPSDUMP')
     
@@ -79,7 +79,7 @@ def evaluo(file_trj,nclasses,cutoff,maxneigh):
                                                 # la clase de cada átomo del 
                                                 # sistema
     res = np.asarray(resultados)
-    
+    np.save(outname + 'npy', res)
     print(res.shape)
     
     return res
@@ -90,7 +90,7 @@ def main():
 
    args = get_args() 
 
-   prueba = evaluo(args.file_trj,args.nclasses,args.cutoff,args.maxneigh)
+   prueba = evaluo(args.file_trj,args.nclasses,args.cutoff,args.maxneigh,args.outname)
 
    
    return prueba
@@ -105,7 +105,7 @@ def get_args():
     parser.add_argument('--file_trj', help='path to files', type=str, required=True)
     parser.add_argument('--cutoff', help='neighbor cutoff distance (in nm)', type=float, required=True)
     parser.add_argument('--maxneigh', help='max number of neighbors', type=int, required=True)
-    
+    parser.add_argument('--outname', help='name output file', type=str, required=True)    
     args = parser.parse_args()
     
     return args

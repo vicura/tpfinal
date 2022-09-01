@@ -112,7 +112,7 @@ def main():
 
    args = get_args() 
 
-   res = grafico_resultados(args.resultados,args.archivo_csv,args.atoms,args.outname)
+   res = grafico_resultados(args.file_resultados,args.archivo_csv,args.atoms,args.outname)
    
    return res
    
@@ -122,7 +122,7 @@ def main():
 def get_args():
     #Parse Arguments
     parser = argparse.ArgumentParser(description='Uses MDAnalysis and PointNet to identify largest cluster of solid-like atoms')
-    parser.add_argument('--resultados', help='array with results from pointnet', type=int, required=True)
+    parser.add_argument('--file_resultados', help='array with results from pointnet', type=int, required=True)
     parser.add_argument('--file_csv', help='path to file csv', type=str, required=True)
     parser.add_argument('--atoms', help='number of atoms in system', type=int, required=True)
     parser.add_argument('--outname', help='name output file', type=str, required=True)
