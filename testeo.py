@@ -85,7 +85,7 @@ def evaluo(file_trj,nclass,cutoff,maxneigh):
 
 
 
-def main(parametros):       
+def main():       
 
    args = get_args() 
 
