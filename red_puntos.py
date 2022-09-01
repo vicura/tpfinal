@@ -189,7 +189,7 @@ class PointNet:
         
         
         # Using Seaborn heatmap to create the plot
-        fx = sn.heatmap(cm, annot=True, cmap='turbo')
+        fx = sn.heatmap(cm, annot=True, cmap='viridis')
 
          # labels the title and x, y axis of plot
         fx.set_title( 'Confusion Matrix \n\n');
