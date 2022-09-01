@@ -211,7 +211,7 @@ class PointNet:
         return 
         
         
-    def predigo_con_red(self, arg, rate, n_classes, input_shape, samples, step):
+    def predigo_con_red(self, arg, rate, n_classes, input_shape, samples,steps):
        
        red = self.defino_red(self.arg,self.rate,train_labels.shape[-1],train_samples[1].shape)     
        
@@ -219,7 +219,7 @@ class PointNet:
        
        red.summary()
        
-       pred = red.predict(samples, step)
+       pred = red.predict(samples, steps)
        
        return pred
                
