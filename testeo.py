@@ -72,7 +72,7 @@ def evaluo(file_trj,nclasses,cutoff,maxneigh,outname):
 
         input_shape = (maxneigh, nclasses, 1)
         # cada frame envío a la red
-        predictions = PointNet.predigo_con_red(nclasses, input_shape, samples=np_samples, steps=len(np_samples))
+        predictions = PointNet.predigo_con_red(nclasses=classes, input_shape=input_shape, samples=np_samples, steps=len(np_samples))
         predicted_classes = np.argmax(np.rint(predictions), axis=1)
         
         resultados.append(predicted_classes)    # Guardo en lista la predicción sobre
