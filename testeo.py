@@ -16,7 +16,7 @@ from red_puntos import PointNet
 
 os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID" 
 os.environ["CUDA_VISIBLE_DEVICES"]="1"
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 """# Testeo"""
 
@@ -78,6 +78,7 @@ def evaluo(file_trj,nclass,cutoff,maxneigh):
                                                 # la clase de cada átomo del 
                                                 # sistema
     res = np.asarray(resultados)
+    
     print(res.shape)
     
     return res
@@ -110,4 +111,5 @@ def get_args():
    
 if __name__ == "__main__":
    main()
+
     
