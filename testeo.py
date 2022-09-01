@@ -29,7 +29,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 # Función modificada de https://github.com/rsdefever/GenStrIde/blob/master/scripts/mda_cluster.py
 
-def evaluo(file_trj,nclasses,cutoff,maxneigh,outname):     
+def evaluo(file_trj,n_classes,cutoff,maxneigh,outname):     
     
     u = mda.Universe(file_trj,topology_format='LAMMPSDUMP')
     
@@ -70,9 +70,9 @@ def evaluo(file_trj,nclasses,cutoff,maxneigh,outname):
         # Convierto en un array
         np_samples = np.asarray(samples)
 
-        input_shape = (maxneigh, nclasses, 1)
+        input_shape = (maxneigh, n_classes, 1)
         # cada frame envío a la red
-        predictions = PointNet.predigo_con_red(nclasses=nclasses, input_shape=input_shape, samples=np_samples, steps=len(np_samples))
+        predictions = PointNet.predigo_con_red(n_classes, input_shape, samples=np_samples, steps=len(np_samples))
         predicted_classes = np.argmax(np.rint(predictions), axis=1)
         
         resultados.append(predicted_classes)    # Guardo en lista la predicción sobre
@@ -90,7 +90,7 @@ def main():
 
    args = get_args() 
 
-   prueba = evaluo(args.file_trj,args.nclasses,args.cutoff,args.maxneigh,args.outname)
+   prueba = evaluo(args.file_trj,args.n_classes,args.cutoff,args.maxneigh,args.outname)
 
    
    return prueba
@@ -101,7 +101,7 @@ def main():
 def get_args():
     #Parse Arguments
     parser = argparse.ArgumentParser(description='Uses MDAnalysis and PointNet to identify largest cluster of solid-like atoms')
-    parser.add_argument('--nclasses', help='number of classes', type=int, required=True)
+    parser.add_argument('--n_classes', help='number of classes', type=int, required=True)
     parser.add_argument('--file_trj', help='path to files', type=str, required=True)
     parser.add_argument('--cutoff', help='neighbor cutoff distance (in nm)', type=float, required=True)
     parser.add_argument('--maxneigh', help='max number of neighbors', type=int, required=True)
