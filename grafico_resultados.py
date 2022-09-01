@@ -17,7 +17,7 @@ from red_puntos import PointNet
 
 
 
-def grafico_resultados(prueba,archivo_csv):
+def grafico_resultados(prueba,archivo_csv,atoms,outname):
 
    
    class_lam = []
@@ -35,11 +35,11 @@ def grafico_resultados(prueba,archivo_csv):
          lam_ord += 1 
        if j == 2:
          lam_desord += 1
-     class_lam.append(lam/2048)                        # Divido por el número de 
-     class_lam_ord.append(lam_ord/2048)                # partículas totales para
-     class_lam_desord.append(lam_desord/2048)          # tener la fracción de 
-                                                       # partículas por frame de 
-                                                       # cada clase
+     class_lam.append(lam/atoms)                        # Divido por el número de 
+     class_lam_ord.append(lam_ord/atoms)                # partículas totales para
+     class_lam_desord.append(lam_desord/atoms)          # tener la fracción de 
+                                                        # partículas por frame de 
+                                                        # cada clase
 
    frame = [n for n,i in enumerate(prueba)]
    print(frame)
@@ -106,7 +106,30 @@ def grafico_resultados(prueba,archivo_csv):
    fig.write_image(args.outname+".png")
    return
    
+
+
+def main():       
+
+   args = get_args() 
+
+   res = grafico_resultados(args.resultados,args.archivo_csv,args.atoms,args.outname)
+   
+   return res
    
    
    
-   grafico = grafico_resultados(prueba,args.file_csv)
+   
+def get_args():
+    #Parse Arguments
+    parser = argparse.ArgumentParser(description='Uses MDAnalysis and PointNet to identify largest cluster of solid-like atoms')
+    parser.add_argument('--resultados', help='array with results from pointnet', type=int, required=True)
+    parser.add_argument('--file_csv', help='path to file csv', type=str, required=True)
+    parser.add_argument('--atoms', help='number of atoms in system', type=int, required=True)
+    parser.add_argument('--outname', help='name output file', type=str, required=True)
+    args = parser.parse_args()
+    
+    return args
+   
+if __name__ == "__main__":
+   main()    
+   

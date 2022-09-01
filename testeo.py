@@ -70,7 +70,7 @@ def evaluo(file_trj,nclass,cutoff,maxneigh):
         # Convierto en un array
         np_samples = np.asarray(samples)
 
-        # 
+        input_shape = (maxneigh, nclass, 1)
         # cada frame envío a la red
         predictions = PointNet.predigo_con_red(nclass,input_shape, np_samples, steps=len(np_samples))
         predicted_classes = np.argmax(np.rint(predictions), axis=1)
@@ -90,7 +90,7 @@ def main():
 
    args = get_args() 
 
-   prueba = evaluo(args.file_trj,args.nclass,args.cutoff,args.maxneigh,args.input_shape)
+   prueba = evaluo(args.file_trj,args.nclass,args.cutoff,args.maxneigh)
 
    
    return prueba
@@ -105,7 +105,7 @@ def get_args():
     parser.add_argument('--file_trj', help='path to files', type=str, required=True)
     parser.add_argument('--cutoff', help='neighbor cutoff distance (in nm)', type=float, required=True)
     parser.add_argument('--maxneigh', help='max number of neighbors', type=int, required=True)
-    parser.add_argument('--input_shape', help='shape of input', type=tuple, required=True)
+    
     args = parser.parse_args()
     
     return args
