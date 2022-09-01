@@ -89,7 +89,7 @@ def main():
 
    args = get_args() 
 
-   prueba = evaluo(args.file_trj,args.nclass,args.cutoff,args.maxneigh,args.outname)
+   prueba = evaluo(args.file_trj,args.nclass,args.cutoff,args.maxneigh)
 
    
    return prueba
