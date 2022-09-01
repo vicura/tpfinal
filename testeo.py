@@ -103,7 +103,6 @@ def get_args():
     parser = argparse.ArgumentParser(description='Uses MDAnalysis and PointNet to identify largest cluster of solid-like atoms')
     parser.add_argument('--nclass', help='number of classes', type=int, required=True)
     parser.add_argument('--file_trj', help='path to files', type=str, required=True)
-    parser.add_argument('--file_csv', help='path to files', type=str, required=True)
     parser.add_argument('--cutoff', help='neighbor cutoff distance (in nm)', type=float, required=True)
     parser.add_argument('--maxneigh', help='max number of neighbors', type=int, required=True)
     args = parser.parse_args()
