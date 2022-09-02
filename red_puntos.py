@@ -21,8 +21,8 @@ from sklearn.metrics import classification_report
 
 
 class PointNet:
-    def __init__(self, lr=0.001, epochs=75,  \
-        batch_size=16, disp_step=1, input_shape=(250,3,1), \
+    def __init__(self, lr=0.001, epochs=15,  \
+        batch_size=32, disp_step=1, input_shape=(250,3,1), \
         rate = 0.3, arg = 1e-5,  \
         n_classes=3):
 
@@ -178,13 +178,6 @@ class PointNet:
         cm = confusion_matrix(test_labels2, predicted_labels)
         print(cm)
 
-        
-
-        fig, ax = plt.subplots(figsize=(8, 6))
-        disp = ConfusionMatrixDisplay(cm)
-        disp.plot(ax=ax, colorbar=True)
-        plt.show()
-        plt.savefig('cm.png')
         
         
         
