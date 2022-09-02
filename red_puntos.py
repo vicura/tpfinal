@@ -180,7 +180,7 @@ class PointNet:
 
         
         
-        
+        plt.figure()
         # Using Seaborn heatmap to create the plot
         fx = sn.heatmap(cm, annot=True, cmap='viridis')
 
@@ -193,7 +193,7 @@ class PointNet:
         fx.xaxis.set_ticklabels(['0','1','2'])
         fx.yaxis.set_ticklabels(['0','1','2'])
         plt.savefig('cm_sn.png')
-        plt.show()
+        #plt.show()
         
         # Classification report 
         print(classification_report(test_labels2, predicted_labels))
@@ -210,7 +210,7 @@ class PointNet:
        
        red = red.load_weights("pointnet_weights.ckpt")
        
-       red.summary()
+       #red.summary()
        
        pred = red.predict(samples, steps)
        
