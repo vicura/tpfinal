@@ -29,7 +29,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 # Función modificada de https://github.com/rsdefever/GenStrIde/blob/master/scripts/mda_cluster.py
 
-def evaluo(file_trj,epochs,batch_size,learning_rate,arg,rate,n_classes,cutoff,maxneigh,outname):     
+def evaluo(file_trj,nepochs,batch_size,learning_rate,arg,rate,n_classes,cutoff,maxneigh,outname):     
     
     net = PointNet(epochs=nepochs,
                    batch_size=batch_size,
@@ -99,7 +99,7 @@ def main():
 
    args = get_args() 
                    
-   prueba = evaluo(args.file_trj,args.epochs,args.batch_size,args.learning_rate,args.arg,
+   prueba = evaluo(args.file_trj,args.nepochs,args.batch_size,args.learning_rate,args.arg,
    args.rate,args.n_classes,args.cutoff,args.maxneigh,args.outname)
 
    
