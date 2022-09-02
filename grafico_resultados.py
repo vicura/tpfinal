@@ -17,14 +17,17 @@ from red_puntos import PointNet
 
 
 
-def grafico_resultados(prueba,archivo_csv,atoms,outname):
+def grafico_resultados(resultados,archivo_csv,atoms,outname):
 
+   #cargo data
+   data = np.load(resultados)
+   print(data)
    
    class_lam = []
    class_lam_ord = []
    class_lam_desord = []
 
-   for i in prueba:
+   for i in data:
      lam = 0
      lam_ord = 0
      lam_desord = 0
@@ -41,11 +44,11 @@ def grafico_resultados(prueba,archivo_csv,atoms,outname):
                                                         # partículas por frame de 
                                                         # cada clase
 
-   frame = [n for n,i in enumerate(prueba)]
+   frame = [n for n,i in enumerate(data)]
    print(frame)
 
 
-   data = pd.read_csv(archivo_csv,sep=',',header=None,names=['Step','T','TotEng','PotEng','KinEng',
+   data2 = pd.read_csv(archivo_csv,sep=',',header=None,names=['Step','T','TotEng','PotEng','KinEng',
    'E_pair','E_bond','Volume','Press','Densidad'])
    
    print(data)
@@ -53,8 +56,8 @@ def grafico_resultados(prueba,archivo_csv,atoms,outname):
    ml = pd.DataFrame({'lamelar': class_lam[:-1], 
                    'lamelar ordenado': class_lam_ord[:-1], 
                    'lamelar desordenado' : class_lam_desord[:-1],
-                   'temperatura': data['T'],
-                   'volumen': data['Volume']})
+                   'temperatura': data2['T'],
+                   'volumen': data2['Volume']})
 
    print(ml)
 
@@ -103,7 +106,7 @@ def grafico_resultados(prueba,archivo_csv,atoms,outname):
             color="black"
         )))
    #fig.show()
-   fig.write_image(args.outname+".png")
+   fig.write_image(outname+".png")
    return
    
 
