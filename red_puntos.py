@@ -208,9 +208,9 @@ class PointNet:
        
        red = self.defino_red(self.arg,self.rate,self.n_classes,self.input_shape)     
        
-       red = red.load_weights("pointnet_weights.ckpt")
+       red.load_weights("pointnet_weights.ckpt")
        
-       #red.summary()
+       red.summary()
        
        pred = red.predict(samples, steps)
        
