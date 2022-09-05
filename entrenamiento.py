@@ -22,6 +22,14 @@ import matplotlib.pyplot as plt
 from tensorflow.python.client import device_lib
 from red_puntos import PointNet
 import os
+import gc
+
+# Custom Callback To Include in Callbacks List At Training Time
+class GarbageCollectorCallback(tf.keras.callbacks.Callback):
+    def on_epoch_end(self, epoch, logs=None):
+        gc.collect()
+        
+        
 os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID" 
 os.environ["CUDA_VISIBLE_DEVICES"]="0"
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
@@ -72,6 +80,8 @@ def main():
    
    #Entreno                        
    PointNet_train = net.entreno_red(train_samples, train_labels, valid_samples, valid_labels, test_samples, test_labels, args.batch_size, args.nepochs)
+   
+   gc.collect()
    
    data = []
    labels = []
