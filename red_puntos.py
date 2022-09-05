@@ -21,6 +21,7 @@ from sklearn.metrics import classification_report
 from tensorflow.keras.callbacks import ModelCheckpoint
 
 checkpoint_path = "training_1/cp.ckpt"
+checkpoint_dir = os.path.dirname(checkpoint_path)
 
 class PointNet:
     def __init__(self, lr=0.001, epochs=15,  \
@@ -123,8 +124,7 @@ class PointNet:
     def entreno_red(self,train_samples, train_labels, valid_samples, valid_labels, test_samples, test_labels, batch_size, epochs): 
            
            # model callback
-        
-        checkpoint_dir = os.path.dirname(checkpoint_path)
+
 
         # Create a callback that saves the model's weights
         cp_callback = ModelCheckpoint(filepath=checkpoint_path,
