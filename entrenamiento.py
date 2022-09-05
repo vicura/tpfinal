@@ -52,7 +52,7 @@ def main():
    point_cloud_samples = net.rotate_point_cloud(data)
    a,b,c = point_cloud_samples.shape
    point_cloud_samples = point_cloud_samples.reshape(a,b,c,-1)     
-   print('input shape: ' + str(point_cloud_samples_samples.shape))
+   print('input shape: ' + str(point_cloud_samples.shape))
              
    # split data
    full_train_samples,test_samples,full_train_labels,test_labels = train_test_split(point_cloud_samples, labels, test_size=0.2, random_state=13)

@@ -70,7 +70,7 @@ def main():
 
 
     for fcount in range(len(files)):
-    
+       print(files[fcount])
     # Extraigo la class id y creo label
 
        if 'dump.lam_orden2' in files[fcount]:
@@ -87,7 +87,7 @@ def main():
        # Leo los archivos con MDAnalysis
 
        u = mda.Universe(files[fcount],topology_format='LAMMPSDUMP')
-
+       print('numero de frames: ',u.trajectory.n_frames)
        # Para cada frame de la trayectoria:
        for ts in u.trajectory:
 
