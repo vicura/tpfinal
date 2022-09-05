@@ -206,9 +206,7 @@ class PointNet:
         # Classification report 
         print(classification_report(test_labels2, predicted_labels))
         
-        
-        red.save_weights("pointnet_weights.ckpt")
-        
+       
         
         tf.keras.backend.clear_session()          
         del red
