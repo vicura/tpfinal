@@ -41,7 +41,7 @@ def evaluo(file_trj,nepochs,batch_size,learning_rate,arg,rate,n_classes,cutoff,m
     
     u = mda.Universe(file_trj,topology_format='LAMMPSDUMP')
     
-    resultados = []
+    #resultados = []
 
     # File to write output
     f_summary = open(outname+'_summary.mda','w')
@@ -107,6 +107,12 @@ def evaluo(file_trj,nepochs,batch_size,learning_rate,arg,rate,n_classes,cutoff,m
         samples=np_samples, steps=len(np_samples))
         predicted_classes = np.asarray(predictions)
         #predicted_classes = np.argmax(np.rint(predictions), axis=1)
+        
+        
+        
+        np_samples = []
+        samples = []
+        
         
         
         # Extract different atom types
