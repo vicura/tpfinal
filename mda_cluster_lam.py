@@ -35,10 +35,10 @@ def main():
     
     # File to write output
     f_summary = open(args.outname+'_summary.mda','w')
-    #f_class = open(args.outname+'_class.mda','w')
+    f_class = open(args.outname+'_class.mda','w')
     
     f_summary.write("# Time, n_lam, n_lam_ord, n_desord\n")
-    #f_class.write("# Frame, Átomo, Resultado, x, y, z\n")
+    f_class.write("# Frame, Átomo, Resultado, x, y, z\n")
 
     # Here is where we initialize the pointnet
     pointnet = PointNet(n_points=args.maxneigh,n_classes=args.nclass,weights_dir=args.weights)
