@@ -171,15 +171,15 @@ def main():
     # tengo array con atomos seleccionados, sus vecinos
     np.save(args.out_name + '_scaled_shuffled_equal_labels.npy', labels)
 
-   samples = []
-   samples_list = []
-   labels = []
-   labels_list = []
-   desord = []
-   lam = []
-   lam_ord = []
-   idxs = []
-   sel = []
+    samples = []
+    samples_list = []
+    labels = []
+    labels_list = []
+    desord = []
+    lam = []
+    lam_ord = []
+    idxs = []
+    sel = []
    
    
 def get_args():
