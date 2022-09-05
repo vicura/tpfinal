@@ -218,7 +218,9 @@ class PointNet:
        
        red = self.defino_red(self.arg,self.rate,self.n_classes,self.input_shape)     
        
-       red.load_weights(checkpoint_path)
+       latest = tf.train.latest_checkpoint(checkpoint_dir)
+       
+       red.load_weights(latest)
        
        red.summary()
        
