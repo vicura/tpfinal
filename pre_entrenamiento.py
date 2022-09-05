@@ -181,7 +181,7 @@ def get_args():
     parser.add_argument('--out_name', help='file prefix to save training dataset', type=str, required=True)
     parser.add_argument('--cutoff', help='neighbor cutoff for point clouds', type=float, required=True)
     parser.add_argument('--max_neigh',help='max neighbors in point clouds',type=int,required=True)
-    parser.add_argument('--n_select', help='number training samples to extract from each frame of a simulation', type=int, required=False,default=1000)
+    parser.add_argument('--n_select', help='number training samples to extract from each frame of a simulation', type=int, required=False,default=50)
     parser.add_argument('--n_samples', help='total number training samples per phase', type=int, required=False,default=100000)
 
     args = parser.parse_args()
