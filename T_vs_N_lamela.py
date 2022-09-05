@@ -8,9 +8,9 @@ import pandas as pd
 
 def T_vs_N_lamela(archivo_N,archivo_thermo):
 
-   thermo = open(archivo_thermo,'r')
-   temp = np.loadtxt(thermo)
-   thermo.readline()
+
+   temp = pd.read_csv(archivo_thermo)
+
 
    salida = open(input('nombre del archivo de salida: '),'w')
   # salida = input('nombre del archivo de salida: ')

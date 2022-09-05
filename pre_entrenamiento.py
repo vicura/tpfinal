@@ -128,12 +128,14 @@ def main():
              else:
                 sample = vals
 
-             samples.append(sample)
-             labels.append(label)
+             samples.append(sample)   #agrego a samples
+             labels.append(label)     #agrego a labels
 
     # Convierto samples y labels en arrays 
     samples = np.asarray(samples)
+    print('samples shape', samples.shape)
     labels = np.asarray(labels)
+    print('labels shape', labels.shape)
 
     ## Extra pre-processing de los datos de entrenamiento ##
     # Extraigo idxs para las diferentes clases
@@ -154,7 +156,9 @@ def main():
     labels_list = [labels_list[i][:args.n_samples] for i in range(nclass)]
     # 3. "Re-apilo"
     samples = np.vstack(samples_list)
+    print('samples shape', samples.shape)
     labels = np.vstack(labels_list)
+    print('labels shape', labels.shape)
     # 4. Normalizo cada muestra de manera que la distancia al átomo más cercano es 1.0 unidades
     for k in range(samples.shape[0]):
         samples[k,...] = samples[k,...]/np.linalg.norm(samples[k][0])
@@ -162,9 +166,11 @@ def main():
 
     # Guardo outputs
     np.save(args.out_name + '_scaled_shuffled_equal_samples.npy', samples)
+    
+    # tengo array con atomos seleccionados, sus vecinos
     np.save(args.out_name + '_scaled_shuffled_equal_labels.npy', labels)
 
-
+   
   
 def get_args():
 
