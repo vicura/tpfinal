@@ -73,6 +73,18 @@ def main():
    #Entreno                        
    PointNet_train = net.entreno_red(train_samples, train_labels, valid_samples, valid_labels, test_samples, test_labels, args.batch_size, args.nepochs)
    
+   data = []
+   labels = []
+   point_cloud_samples = []
+   full_train_samples = []
+   test_samples = []
+   full_train_labels = []
+   test_labels = []
+   train_samples = []
+   valid_samples = []
+   train_labels = []
+   valid_labels = []
+   
    return
 
    
