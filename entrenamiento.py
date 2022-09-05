@@ -83,6 +83,8 @@ def main():
    
    gc.collect()
    
+   tf.keras.backend.clear_session()
+   
    data = []
    labels = []
    point_cloud_samples = []
