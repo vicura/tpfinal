@@ -44,8 +44,8 @@ def evaluo(file_trj,nepochs,batch_size,learning_rate,arg,rate,n_classes,cutoff,m
     resultados = []
 
     # File to write output
-    f_summary = open(args.outname+'_summary.mda','w')
-    f_class = open(args.outname+'_class.mda','w')
+    f_summary = open(outname+'_summary.mda','w')
+    f_class = open(outname+'_class.mda','w')
     
     f_summary.write("# Time, n_lam, n_lam_ord, n_desord\n")
     
