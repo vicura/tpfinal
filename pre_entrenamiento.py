@@ -88,6 +88,7 @@ def main():
 
        u = mda.Universe(files[fcount],topology_format='LAMMPSDUMP')
        print('numero de frames: ',u.trajectory.n_frames)
+       print('numero de atomos totales: ',u.trajectory.n_atoms)
        # Para cada frame de la trayectoria:
        for ts in u.trajectory:
 
@@ -180,7 +181,7 @@ def get_args():
     parser.add_argument('--out_name', help='file prefix to save training dataset', type=str, required=True)
     parser.add_argument('--cutoff', help='neighbor cutoff for point clouds', type=float, required=True)
     parser.add_argument('--max_neigh',help='max neighbors in point clouds',type=int,required=True)
-    parser.add_argument('--n_select', help='number training samples to extract from each frame of a simulation', type=int, required=False,default=5)
+    parser.add_argument('--n_select', help='number training samples to extract from each frame of a simulation', type=int, required=False,default=1000)
     parser.add_argument('--n_samples', help='total number training samples per phase', type=int, required=False,default=100000)
 
     args = parser.parse_args()
