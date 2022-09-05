@@ -17,47 +17,54 @@ from red_puntos import PointNet
 
 
 
-def grafico_resultados(resultados,archivo_csv,atoms,outname):
-
-   #cargo data
-   data = np.load(resultados)
-   print(data)
+def grafico_resultados(summary,archivo_csv,atoms,outname):
+   
    
    class_lam = []
    class_lam_ord = []
    class_lam_desord = []
 
-   for i in data:
-     lam = 0
-     lam_ord = 0
-     lam_desord = 0
-     for j in i:
-       if j == 0:
-         lam += 1
-       if j == 1:
-         lam_ord += 1 
-       if j == 2:
-         lam_desord += 1
-     class_lam.append(lam/atoms)                        # Divido por el número de 
-     class_lam_ord.append(lam_ord/atoms)                # partículas totales para
-     class_lam_desord.append(lam_desord/atoms)          # tener la fracción de 
-                                                        # partículas por frame de 
-                                                        # cada clase
+   #cargo data
+   with open(summary) as n:
+      lines = n.readlines()
+#      for j in range(len(temp)):
+      #k=0 
+      for i in range(1, len(lines)):
+         #if k<200000:
+            line = lines[i] 
+            if line != '':
+               line = line.rstrip('	\n')
+               line =  ' '.join(line.split())
+               line = line.split(' ')
+               n_lam = line[1]
+               class_lam.append(n_lam/atoms)
+               n_lam_ord = line[2]
+               class_lam_ord.append(n_lam_ord/atoms)
+               n_desord= line[3]
+               class_lam_desord.append(n_lam_desord/atoms)                              
+  
+               #salida.write(str(int(temp[k][1]))+' '+str(n_lam/atoms)+' '+str(n_lam_ord/atoms)+' '+str(n_desord/atoms)+'\n')
+               #k += 1
+         #else:
+          #  break
+   
+   
 
-   frame = [n for n,i in enumerate(data)]
-   print(frame)
+
+   #frame = [n for n,i in enumerate(data)]
+   #print(frame)
 
 
-   data2 = pd.read_csv(archivo_csv,sep=',',header=None,names=['Step','T','TotEng','PotEng','KinEng',
+   data = pd.read_csv(archivo_csv,sep=',',header=None,names=['Step','T','TotEng','PotEng','KinEng',
    'E_pair','E_bond','Volume','Press','Densidad'])
    
-   print(data)
+   #print(data)
 
    ml = pd.DataFrame({'lamelar': class_lam[:-1], 
                    'lamelar ordenado': class_lam_ord[:-1], 
                    'lamelar desordenado' : class_lam_desord[:-1],
-                   'temperatura': data2['T'],
-                   'volumen': data2['Volume']})
+                   'temperatura': data['T'],
+                   'volumen': data['Volume']})
 
    print(ml)
 
@@ -115,7 +122,7 @@ def main():
 
    args = get_args() 
 
-   res = grafico_resultados(args.file_resultados,args.archivo_csv,args.atoms,args.outname)
+   res = grafico_resultados(args.file_summary,args.archivo_csv,args.atoms,args.outname)
    
    return res
    
@@ -125,7 +132,7 @@ def main():
 def get_args():
     #Parse Arguments
     parser = argparse.ArgumentParser(description='Uses MDAnalysis and PointNet to identify largest cluster of solid-like atoms')
-    parser.add_argument('--file_resultados', help='array with results from pointnet', type=int, required=True)
+    parser.add_argument('--file_summary', help='array with results from pointnet', type=int, required=True)
     parser.add_argument('--file_csv', help='path to file csv', type=str, required=True)
     parser.add_argument('--atoms', help='number of atoms in system', type=int, required=True)
     parser.add_argument('--outname', help='name output file', type=str, required=True)
