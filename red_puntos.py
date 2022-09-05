@@ -1,5 +1,6 @@
 #/usr/bin/python
 
+import os
 import numpy as np
 import seaborn as sn
 from sklearn import preprocessing
