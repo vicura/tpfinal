@@ -105,13 +105,14 @@ def evaluo(file_trj,nepochs,batch_size,learning_rate,arg,rate,n_classes,cutoff,m
         # cada frame envío a la red
         predictions = net.predigo_con_red(arg=arg,rate=rate, n_classes= n_classes, input_shape=input_shape, 
         samples=np_samples, steps=len(np_samples))
-        predicted_classes = np.argmax(np.rint(predictions), axis=1)
+        predicted_classes = np.asarray(predictions)
+        #predicted_classes = np.argmax(np.rint(predictions), axis=1)
         
         
         # Extract different atom types
-        lam_atoms = np.where(results == 0)[0]
-        lam_ord_atoms = np.where(results == 1)[0]
-        desord_atoms = np.where(results == 2)[0]
+        lam_atoms = np.where(predicted_classes == 0)[0]
+        lam_ord_atoms = np.where(predicted_classes == 1)[0]
+        desord_atoms = np.where(predicted_classes == 2)[0]
 
         
         f_summary.write("{:8.3f}{:8d}{:8d}{:8d}\n".format(ts.time,lam_atoms.shape[0],lam_ord_atoms.shape[0],desord_atoms.shape[0]))
