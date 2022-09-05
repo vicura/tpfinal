@@ -43,9 +43,25 @@ def evaluo(file_trj,nepochs,batch_size,learning_rate,arg,rate,n_classes,cutoff,m
     
     resultados = []
 
-
+    # File to write output
+    f_summary = open(args.outname+'_summary.mda','w')
+    f_class = open(args.outname+'_class.mda','w')
+    
+    f_summary.write("# Time, n_lam, n_lam_ord, n_desord\n")
+    
+        
     # Analizo en cada frame de la trayectoria
     for ts in u.trajectory:
+        
+        f_class.write("ITEM: TIMESTEP\n")
+        f_class.write("{:d}\n".format(ts.frame))
+        f_class.write("ITEM: NUMBER OF ATOMS\n")
+        f_class.write("{:d}\n".format(ts.n_atoms))
+        f_class.write("ITEM: BOX BOUNDS pp pp pp\n")
+        f_class.write("-"+"{0:.16e} {0:.16e}\n".format(1.0453842000444242e+01,1.0453842000444242e+01))
+        f_class.write("-"+"{0:.16e} {0:.16e}\n".format(1.0453842000444242e+01,1.0453842000444242e+01))
+        f_class.write("-"+"{0:.16e} {0:.16e}\n".format(1.0453842000444242e+01,1.0453842000444242e+01))
+        f_class.write("ITEM: ATOMS id mol type x y z\n")
         # Genero una lista de vecinos (dentro de las coordenadas especificadas)
         
         nlist = nsgrid.FastNS(cutoff*1.0,u.atoms.positions,ts.dimensions).self_search()
@@ -77,27 +93,45 @@ def evaluo(file_trj,nepochs,batch_size,learning_rate,arg,rate,n_classes,cutoff,m
             
         # Convierto en un array
         np_samples = np.asarray(samples)
-        print(np_samples)
+        #print(np_samples)
         print(np_samples.shape)
         
        
         a,b,c = np_samples.shape
         np_samples = np_samples.reshape(a,b,c,-1) 
+        print(np_samples.shape)
         input_shape = (maxneigh, n_classes, 1)
         # cada frame envío a la red
         predictions = net.predigo_con_red(arg=arg,rate=rate, n_classes= n_classes, input_shape=input_shape, 
         samples=np_samples, steps=len(np_samples))
         predicted_classes = np.argmax(np.rint(predictions), axis=1)
         
-        resultados.append(predicted_classes)    # Guardo en lista la predicción sobre
+        
+        # Extract different atom types
+        lam_atoms = np.where(results == 0)[0]
+        lam_ord_atoms = np.where(results == 1)[0]
+        desord_atoms = np.where(results == 2)[0]
+
+        
+        f_summary.write("{:8.3f}{:8d}{:8d}{:8d}\n".format(ts.time,lam_atoms.shape[0],lam_ord_atoms.shape[0],desord_atoms.shape[0]))
+        
+        for atom in u.atoms:
+            f_class.write("{:d} {:s} {:d} {:.10f} {:.10f} {:.10f}\n".format(atom.id,atom.type,results[atom.id],atom.position[0],atom.position[1],atom.position[2]))  
+                                                                                       #indica a que clase pertenece cada nodo del 
+                                                                                       #largest cluster
+
+    f_summary.close()
+    f_class.close()
+
+        
+        #resultados.append(predicted_classes)    # Guardo en lista la predicción sobre
                                                 # la clase de cada átomo del 
                                                 # sistema
-    res = np.asarray(resultados)
-    np.save(outname + 'npy', res)
-    print(res.shape)
+    #res = np.asarray(resultados)
+    #np.save(outname + 'npy', res)
+    #print(res.shape)
     
-    return res
-
+    return 
 
 
 def main():       
