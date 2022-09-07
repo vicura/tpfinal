@@ -15,6 +15,7 @@ from keras.callbacks import ModelCheckpoint, EarlyStopping
 from sklearn.metrics import multilabel_confusion_matrix, confusion_matrix
 from sklearn.metrics import ConfusionMatrixDisplay
 from keras import regularizers
+from keras.models import load_model
 from scikeras.wrappers import KerasClassifier
 import matplotlib.pyplot as plt
 from sklearn.metrics import classification_report
@@ -25,7 +26,7 @@ checkpoint_dir = os.path.dirname(checkpoint_path)
 
 class PointNet:
     def __init__(self, lr=0.001, epochs=15,  \
-        batch_size=32, disp_step=1, input_shape=(250,3,1), \
+        batch_size=32, disp_step=1, input_shape=(100,3,1), \
         rate = 0.3, arg = 1e-5,  \
         n_classes=3):
 
@@ -127,9 +128,9 @@ class PointNet:
 
 
         # Create a callback that saves the model's weights
-        cp_callback = ModelCheckpoint(filepath=checkpoint_path,
-                                                 save_weights_only=True,
-                                                 verbose=1)
+        #cp_callback = ModelCheckpoint(filepath=checkpoint_path,
+         #                                        save_weights_only=True,
+         #                                        verbose=1)
 
         early_stop = EarlyStopping(monitor='val_accuracy',
                            patience=2,
@@ -139,7 +140,7 @@ class PointNet:
         red = self.defino_red(self.arg,self.rate,train_labels.shape[-1],train_samples[1].shape)
         
         PointNet_train = red.fit(train_samples, train_labels, batch_size = self.batch_size, epochs = self.epochs, verbose= 1, 
-            callbacks=[early_stop,cp_callback], validation_data=(valid_samples, valid_labels))
+            callbacks=[early_stop], validation_data=(valid_samples, valid_labels))
            
  
         #Evaluo
@@ -206,7 +207,7 @@ class PointNet:
         # Classification report 
         print(classification_report(test_labels2, predicted_labels))
         
-       
+        red.save('pointnet.h5')
         
         tf.keras.backend.clear_session()          
         del red
@@ -216,13 +217,13 @@ class PointNet:
         
     def predigo_con_red(self, arg, rate, n_classes, input_shape, samples, steps):
        
-       red = self.defino_red(self.arg,self.rate,self.n_classes,self.input_shape)     
+      # red = self.defino_red(self.arg,self.rate,self.n_classes,self.input_shape)     
        
-       latest = tf.train.latest_checkpoint(checkpoint_dir)
+       #latest = tf.train.latest_checkpoint(checkpoint_dir)
        
-       red.load_weights(latest)
+       red = load_model('pointnet.h5')
        
-       red.summary()
+       #red.summary()
        
        pred = red.predict(samples, steps)
        

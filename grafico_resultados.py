@@ -17,48 +17,38 @@ from red_puntos import PointNet
 
 
 
-def grafico_resultados(summary,archivo_csv,atoms,outname):
-   
+def grafico_resultados(prueba,archivo_csv):
+
    
    class_lam = []
    class_lam_ord = []
    class_lam_desord = []
 
-   #cargo data
-   with open(summary) as n:
-      lines = n.readlines()
-#      for j in range(len(temp)):
-      #k=0 
-      for i in range(1, len(lines)):
-         #if k<200000:
-            line = lines[i] 
-            if line != '':
-               line = line.rstrip('	\n')
-               line =  ' '.join(line.split())
-               line = line.split(' ')
-               n_lam = line[1]
-               class_lam.append(n_lam/atoms)
-               n_lam_ord = line[2]
-               class_lam_ord.append(n_lam_ord/atoms)
-               n_desord= line[3]
-               class_lam_desord.append(n_lam_desord/atoms)                              
-  
-               #salida.write(str(int(temp[k][1]))+' '+str(n_lam/atoms)+' '+str(n_lam_ord/atoms)+' '+str(n_desord/atoms)+'\n')
-               #k += 1
-         #else:
-          #  break
-   
-   
+   for i in prueba:
+     lam = 0
+     lam_ord = 0
+     lam_desord = 0
+     for j in i:
+       if j == 0:
+         lam += 1
+       if j == 1:
+         lam_ord += 1 
+       if j == 2:
+         lam_desord += 1
+     class_lam.append(lam/2048)                        # Divido por el número de 
+     class_lam_ord.append(lam_ord/2048)                # partículas totales para
+     class_lam_desord.append(lam_desord/2048)          # tener la fracción de 
+                                                       # partículas por frame de 
+                                                       # cada clase
 
-
-   #frame = [n for n,i in enumerate(data)]
-   #print(frame)
+   frame = [n for n,i in enumerate(prueba)]
+   print(frame)
 
 
    data = pd.read_csv(archivo_csv,sep=',',header=None,names=['Step','T','TotEng','PotEng','KinEng',
    'E_pair','E_bond','Volume','Press','Densidad'])
    
-   #print(data)
+   print(data)
 
    ml = pd.DataFrame({'lamelar': class_lam[:-1], 
                    'lamelar ordenado': class_lam_ord[:-1], 
@@ -89,7 +79,7 @@ def grafico_resultados(summary,archivo_csv,atoms,outname):
                marker_color ="rgb(116,173,209)"),
                secondary_y=True,
        )
-    fig.add_trace(
+   fig.add_trace(
        go.Scatter(x=ml['temperatura'],y=ml['lamelar desordenado'], mode='markers',
                name='fase isotrópica',
                marker_color ="rgb(49,54,149)"),
@@ -113,33 +103,10 @@ def grafico_resultados(summary,archivo_csv,atoms,outname):
             color="black"
         )))
    #fig.show()
-   fig.write_image(outname+".png")
+   fig.write_image(args.outname+".png")
    return
    
-
-
-def main():       
-
-   args = get_args() 
-
-   res = grafico_resultados(args.file_summary,args.archivo_csv,args.atoms,args.outname)
-   
-   return res
    
    
    
-   
-def get_args():
-    #Parse Arguments
-    parser = argparse.ArgumentParser(description='Uses MDAnalysis and PointNet to identify largest cluster of solid-like atoms')
-    parser.add_argument('--file_summary', help='array with results from pointnet', type=int, required=True)
-    parser.add_argument('--file_csv', help='path to file csv', type=str, required=True)
-    parser.add_argument('--atoms', help='number of atoms in system', type=int, required=True)
-    parser.add_argument('--outname', help='name output file', type=str, required=True)
-    args = parser.parse_args()
-    
-    return args
-   
-if __name__ == "__main__":
-   main()    
-   
+   grafico = grafico_resultados(prueba,args.file_csv)
