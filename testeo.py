@@ -124,10 +124,10 @@ def evaluo(file_trj,nepochs,batch_size,learning_rate,arg,rate,n_classes,cutoff,m
         f_summary.write("{:8.3f}{:8d}{:8d}{:8d}\n".format(ts.time,lam_atoms.shape[0],lam_ord_atoms.shape[0],desord_atoms.shape[0]))
         
         for atom in u.atoms:
-            f_class.write("{:d} {:s} {:d} {:.10f} {:.10f} {:.10f}\n".format(atom.index,atom.type,predicted_classes[atom.index],atom.position[0],atom.position[1],atom.position[2]))  
-                                                                                       #indica a que clase pertenece cada nodo del 
-                                                                                       #largest cluster
-
+           if  predicted_classes[atom.index] == 2:
+              f_class.write("{:d} {:s} {:d} {:.10f} {:.10f} {:.10f}\n".format(atom.index,atom.type,predicted_classes[atom.index],atom.position[0],atom.position[1],atom.position[2]))  
+                                                                                       
+                                                                                       
     f_summary.close()
     f_class.close()
 
