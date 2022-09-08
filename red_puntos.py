@@ -127,9 +127,9 @@ class PointNet:
 
 
         # Create a callback that saves the model's weights
-        cp_callback = ModelCheckpoint(filepath=checkpoint_path,
-                                                 save_weights_only=True,
-                                                 verbose=1)
+    #    cp_callback = ModelCheckpoint(filepath=checkpoint_path,
+     #                                            save_weights_only=True,
+      #                                           verbose=1)
 
         early_stop = EarlyStopping(monitor='val_accuracy',
                            patience=2,
@@ -139,14 +139,15 @@ class PointNet:
         red = self.defino_red(self.arg,self.rate,train_labels.shape[-1],train_samples[1].shape)
         
         PointNet_train = red.fit(train_samples, train_labels, batch_size = self.batch_size, epochs = self.epochs, verbose= 1, 
-            callbacks=[early_stop,cp_callback], validation_data=(valid_samples, valid_labels))
+            callbacks=[early_stop], validation_data=(valid_samples, valid_labels))
            
  
         #Evaluo
         mse_test = red.evaluate(test_samples, test_labels)
 
         print('mse_test: ' + str(mse_test))
-        
+        dict(zip(red.metrics_names, mse_test))
+
 
         #Plot train history
         

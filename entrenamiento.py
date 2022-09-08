@@ -73,8 +73,6 @@ def main():
    print('label shape: ' + str(valid_labels.shape))   
    
    
-
-   #red = net.defino_red(1e-5,0.3,n_classes,train_samples[1].shape)
    
    #red.summary()
    
@@ -109,7 +107,7 @@ def get_args():
     parser.add_argument('--nepochs', help='number of epochs for training', type=int, required=False, default=150)
     parser.add_argument('--batch_size', help='size of batch for training', type=int, required=False, default=32)
     parser.add_argument('--arg',help='argument',type=float, required=False, default=1e-5)
-    parser.add_argument('--rate',help='rate of dropout',type=float, required=False, default=0.7)
+    parser.add_argument('--rate',help='rate of dropout',type=float, required=False, default=0.3)
     args = parser.parse_args()
     
     return args
