@@ -25,7 +25,7 @@ checkpoint_dir = os.path.dirname(checkpoint_path)
 
 class PointNet:
     def __init__(self, lr=0.001, epochs=15,  \
-        batch_size=32, disp_step=1, input_shape=(250,3,1), \
+        batch_size=32, disp_step=1, input_shape=(50,3,1), \
         rate = 0.3, arg = 1e-5,  \
         n_classes=3):
 
