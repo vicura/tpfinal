@@ -45,7 +45,7 @@ def evaluo(file_trj,nepochs,batch_size,learning_rate,arg,rate,n_classes,cutoff,m
 
     # File to write output
     f_summary = open(outname+'_summary.mda','w')
-    f_class = open(outname+'_class.lammpstrj','w')
+    f_class = open(outname+'_class.mda','w')
     
     f_summary.write("# Time, n_lam, n_lam_ord, n_desord\n")
     
@@ -61,7 +61,7 @@ def evaluo(file_trj,nepochs,batch_size,learning_rate,arg,rate,n_classes,cutoff,m
         f_class.write("-"+"{0:.16e} {0:.16e}\n".format(1.0453842000444242e+01,1.0453842000444242e+01))
         f_class.write("-"+"{0:.16e} {0:.16e}\n".format(1.0453842000444242e+01,1.0453842000444242e+01))
         f_class.write("-"+"{0:.16e} {0:.16e}\n".format(1.0453842000444242e+01,1.0453842000444242e+01))
-        f_class.write("ITEM: ATOMS id type mol x y z\n")
+        f_class.write("ITEM: ATOMS id type res x y z\n")
         # Genero una lista de vecinos (dentro de las coordenadas especificadas)
         
         nlist = nsgrid.FastNS(cutoff*1.0,u.atoms.positions,ts.dimensions).self_search()
@@ -124,8 +124,9 @@ def evaluo(file_trj,nepochs,batch_size,learning_rate,arg,rate,n_classes,cutoff,m
         f_summary.write("{:8.3f}{:8d}{:8d}{:8d}\n".format(ts.time,lam_atoms.shape[0],lam_ord_atoms.shape[0],desord_atoms.shape[0]))
         
         for atom in u.atoms:
-        #   if  predicted_classes[atom.index] == 2:
+           if  predicted_classes[atom.index] == 2:
               f_class.write("{:d} {:s} {:d} {:.10f} {:.10f} {:.10f}\n".format(atom.index,atom.type,predicted_classes[atom.index],atom.position[0],atom.position[1],atom.position[2]))  
+                                                                                       
                                                                                        
     f_summary.close()
     f_class.close()
