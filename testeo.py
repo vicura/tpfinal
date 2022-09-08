@@ -61,7 +61,7 @@ def evaluo(file_trj,nepochs,batch_size,learning_rate,arg,rate,n_classes,cutoff,m
         f_class.write("-"+"{0:.16e} {0:.16e}\n".format(1.0453842000444242e+01,1.0453842000444242e+01))
         f_class.write("-"+"{0:.16e} {0:.16e}\n".format(1.0453842000444242e+01,1.0453842000444242e+01))
         f_class.write("-"+"{0:.16e} {0:.16e}\n".format(1.0453842000444242e+01,1.0453842000444242e+01))
-        f_class.write("ITEM: ATOMS id type res x y z\n")
+        f_class.write("ITEM: ATOMS id type mol x y z\n")
         # Genero una lista de vecinos (dentro de las coordenadas especificadas)
         
         nlist = nsgrid.FastNS(cutoff*1.0,u.atoms.positions,ts.dimensions).self_search()
