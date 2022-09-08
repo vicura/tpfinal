@@ -122,6 +122,30 @@ class PointNet:
        return red
     
     
+    
+    
+#    def gridsearch(self,  ):
+       
+       # La grilla de parámetros a evaluar
+
+#       param_grid = {'batch_size':[16,32,64],
+#                     'arg':[1e-5,1e-3,0.1],
+#                     'rate':[0.3,0.5,0.7]}
+    
+#       model = KerasClassifier(model = pointnet, rate= rate, arg = arg, batch_size=batch_size)
+    
+#       grid = GridSearchCV(estimator=model, param_grid=param_grid, n_jobs=-1, cv=5)
+#       grid_result = grid.fit(train_samples, train_labels)
+        # summarize results
+#       print("Best: %f using %s" % (grid_result.best_score_, grid_result.best_params_))
+#       means = grid_result.cv_results_['mean_test_score']
+#       stds = grid_result.cv_results_['std_test_score']
+#       params = grid_result.cv_results_['params']
+#       for mean, stdev, param in zip(means, stds, params):
+#          print("%f (%f) with: %r" % (mean, stdev, param))
+#       return
+    
+    
     def entreno_red(self,train_samples, train_labels, valid_samples, valid_labels, test_samples, test_labels, batch_size, epochs): 
            
         early_stop = EarlyStopping(monitor='val_accuracy',
