@@ -61,7 +61,7 @@ def evaluo(file_trj,nepochs,batch_size,learning_rate,arg,rate,n_classes,cutoff,m
         f_class.write("-"+"{0:.16e} {0:.16e}\n".format(1.0453842000444242e+01,1.0453842000444242e+01))
         f_class.write("-"+"{0:.16e} {0:.16e}\n".format(1.0453842000444242e+01,1.0453842000444242e+01))
         f_class.write("-"+"{0:.16e} {0:.16e}\n".format(1.0453842000444242e+01,1.0453842000444242e+01))
-        f_class.write("ITEM: ATOMS id mol type x y z\n")
+        f_class.write("ITEM: ATOMS id type res x y z\n")
         # Genero una lista de vecinos (dentro de las coordenadas especificadas)
         
         nlist = nsgrid.FastNS(cutoff*1.0,u.atoms.positions,ts.dimensions).self_search()
@@ -93,8 +93,6 @@ def evaluo(file_trj,nepochs,batch_size,learning_rate,arg,rate,n_classes,cutoff,m
             
         # Convierto en un array
         np_samples = np.asarray(samples)
-        #print(np_samples)
-        print(np_samples.shape)
         
        
         a,b,c = np_samples.shape
@@ -105,9 +103,11 @@ def evaluo(file_trj,nepochs,batch_size,learning_rate,arg,rate,n_classes,cutoff,m
         # cada frame envío a la red
         predictions = net.predigo_con_red(arg=arg,rate=rate, n_classes= n_classes, input_shape=input_shape, 
         samples=np_samples, steps=len(np_samples))
-        predicted_classes = np.asarray(predictions)
-        #predicted_classes = np.argmax(np.rint(predictions), axis=1)
+        #predicted_classes = np.asarray(predictions)
+        #print(predicted_classes)
         
+        predicted_classes = np.argmax(np.rint(predictions), axis=1)
+        print(predicted_classes)
         
         
         np_samples = []
@@ -124,10 +124,10 @@ def evaluo(file_trj,nepochs,batch_size,learning_rate,arg,rate,n_classes,cutoff,m
         f_summary.write("{:8.3f}{:8d}{:8d}{:8d}\n".format(ts.time,lam_atoms.shape[0],lam_ord_atoms.shape[0],desord_atoms.shape[0]))
         
         for atom in u.atoms:
-            f_class.write("{:d} {:s} {:d} {:.10f} {:.10f} {:.10f}\n".format(atom.id,atom.type,results[atom.id],atom.position[0],atom.position[1],atom.position[2]))  
-                                                                                       #indica a que clase pertenece cada nodo del 
-                                                                                       #largest cluster
-
+           if  predicted_classes[atom.index] == 2:
+              f_class.write("{:d} {:s} {:d} {:.10f} {:.10f} {:.10f}\n".format(atom.index,atom.type,predicted_classes[atom.index],atom.position[0],atom.position[1],atom.position[2]))  
+                                                                                       
+                                                                                       
     f_summary.close()
     f_class.close()
 

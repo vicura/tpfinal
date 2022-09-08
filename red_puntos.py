@@ -15,6 +15,7 @@ from keras.callbacks import ModelCheckpoint, EarlyStopping
 from sklearn.metrics import multilabel_confusion_matrix, confusion_matrix
 from sklearn.metrics import ConfusionMatrixDisplay
 from keras import regularizers
+from keras.models import load_model
 from scikeras.wrappers import KerasClassifier
 import matplotlib.pyplot as plt
 from sklearn.metrics import classification_report
@@ -123,14 +124,6 @@ class PointNet:
     
     def entreno_red(self,train_samples, train_labels, valid_samples, valid_labels, test_samples, test_labels, batch_size, epochs): 
            
-           # model callback
-
-
-        # Create a callback that saves the model's weights
-    #    cp_callback = ModelCheckpoint(filepath=checkpoint_path,
-     #                                            save_weights_only=True,
-      #                                           verbose=1)
-
         early_stop = EarlyStopping(monitor='val_accuracy',
                            patience=2,
                            restore_best_weights=True,
@@ -207,7 +200,7 @@ class PointNet:
         # Classification report 
         print(classification_report(test_labels2, predicted_labels))
         
-       
+        red.save('pointnet.h5')
         
         tf.keras.backend.clear_session()          
         del red
@@ -217,13 +210,10 @@ class PointNet:
         
     def predigo_con_red(self, arg, rate, n_classes, input_shape, samples, steps):
        
-       red = self.defino_red(self.arg,self.rate,self.n_classes,self.input_shape)     
        
-       latest = tf.train.latest_checkpoint(checkpoint_dir)
+       red = load_model('pointnet.h5')
        
-       red.load_weights(latest)
-       
-       red.summary()
+       #red.summary()
        
        pred = red.predict(samples, steps)
        
