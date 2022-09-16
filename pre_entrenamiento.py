@@ -161,8 +161,8 @@ def main():
     labels = np.vstack(labels_list)
     print('labels shape', labels.shape)
     # 4. Normalizo cada muestra de manera que la distancia al átomo más cercano es 1.0 unidades
-    for k in range(samples.shape[0]):
-        samples[k,...] = samples[k,...]/np.linalg.norm(samples[k][0])
+    #for k in range(samples.shape[0]):
+    #    samples[k,...] = samples[k,...]/np.linalg.norm(samples[k][0])
     
 
     # Guardo outputs
