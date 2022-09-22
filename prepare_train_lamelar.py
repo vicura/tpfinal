@@ -1,7 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
-import seaborn as sns
 from pathlib import Path
 import os
 import sys
@@ -25,7 +24,7 @@ def main():
     #
     list_dir = os.listdir(args.path)    
 
-    desord = [d for d in list_dir if 'dump_1' in d]
+    desord = [d for d in list_dir if 'lam_desord_' in d]
     
     with open('dump.desorden', 'w') as outfile:
        for fname in desord:
@@ -33,7 +32,7 @@ def main():
              for line in infile:
                 outfile.write(line)
     
-    lam = [d for d in list_dir if 'pre_ord_' in d]       
+    lam = [d for d in list_dir if 'lam_pre_ord_' in d]      
  
     with open('dump.lam', 'w') as outfile:
        for fname in lam:
@@ -42,7 +41,7 @@ def main():
                 outfile.write(line)
                 
                 
-    lam_ord = [d for d in list_dir if 'ord_fin' in d]    
+    lam_ord = [d for d in list_dir if 'lam_ord_' in d]    
  
     with open('dump.lam_orden', 'w') as outfile:
        for fname in lam_ord:
