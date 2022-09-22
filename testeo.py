@@ -97,7 +97,7 @@ def evaluo(file_trj,nepochs,batch_size,learning_rate,arg,rate,n_classes,cutoff,m
        
         a,b,c = np_samples.shape
         np_samples = np_samples.reshape(a,b,c,-1) 
-        print(np_samples.shape)
+        #print(np_samples.shape)
         
         input_shape = (maxneigh, n_classes, 1)
         # cada frame envío a la red
@@ -112,7 +112,7 @@ def evaluo(file_trj,nepochs,batch_size,learning_rate,arg,rate,n_classes,cutoff,m
         
         np_samples = []
         samples = []
-        
+        sys.stdout.flush()
         
         
         # Extract different atom types
