@@ -109,7 +109,7 @@ class PointNet:
         PointNet.add(Dropout(rate=self.rate))
         PointNet.add(Dense(self.n_classes, activation='softmax'))
 
-        PointNet.compile(loss=keras.losses.categorical_crossentropy, optimizer= tf.keras.optimizers.Adam(),metrics=['accuracy'])
+        PointNet.compile(loss=keras.losses.categorical_crossentropy, optimizer = tf.keras.optimizers.legacy.Adam(),metrics=['accuracy'])
 
         
         return PointNet
