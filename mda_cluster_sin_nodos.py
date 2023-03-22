@@ -14,8 +14,6 @@ sys.path.append(os.path.join(BASE_DIR, '../'))
 
 import nsgrid_rsd as nsgrid
 from pointnet import PointNet
-import multiprocessing
-from multiprocessing import Pool
 
 def main():
 
@@ -35,10 +33,10 @@ def main():
     
     # File to write output
     f_summary = open(args.outname+'_summary.mda','w')
-    #f_class = open(args.outname+'_class.mda','w')
+    f_class = open(args.outname+'_class.mda','w')
     
-    f_summary.write("# Time, n_lam, n_lam_ord, n_desord\n")
-    #f_class.write("# Frame, Átomo, Resultado, x, y, z\n")
+    f_summary.write("# Time, n_lam, n_hex, n_desordlam, n_desordhex\n")
+    f_class.write("# Frame, Átomo, Resultado, x, y, z\n")
 
     # Here is where we initialize the pointnet
     pointnet = PointNet(n_points=args.maxneigh,n_classes=args.nclass,weights_dir=args.weights)
@@ -91,23 +89,20 @@ def main():
 
         # Extract different atom types
         lam_atoms = np.where(results == 0)[0]
-        lam_ord_atoms = np.where(results == 1)[0]
-        desord_atoms = np.where(results == 2)[0]
+        hex_atoms = np.where(results == 1)[0]
+        desordlam_atoms = np.where(results == 2)[0]
+        desordhex_atoms = np.where(results == 3)[0]
 
         
-        f_summary.write("{:8.3f}{:8d}{:8d}{:8d}\n".format(ts.time,lam_atoms.shape[0],lam_ord_atoms.shape[0],desord_atoms.shape[0]))
+        f_summary.write("{:8.3f}{:8d}{:8d}{:8d}{:8d}\n".format(ts.time,lam_atoms.shape[0],hex_atoms.shape[0],desordlam_atoms.shape[0],desordhex_atoms.shape[0]))
         
-       # for atom in u.atoms:
-           # f_class.write("{:10d}{:8d}{:8d}{:^20.10f}{:^20.10f}{:^20.10f}\n".format(ts.frame,atom.index,results[atom.index],atom.position[0],atom.position[1],atom.position[2]))  #indica a que clase pertenece cada nodo del 
+        for atom in u.atoms:
+            f_class.write("{:10d}{:8d}{:8d}{:^20.10f}{:^20.10f}{:^20.10f}\n".format(ts.frame,atom.index,results[atom.index],atom.position[0],atom.position[1],atom.position[2]))  #indica a que clase pertenece cada nodo del 
                                                                                        #largest cluster
 
     f_summary.close()
-   # f_class.close()
-   
-    return
+    f_class.close()
 
 # Boilerplate command to exec main
 if __name__ == "__main__":
-   with Pool() as pool:
-      pool.map(main(), range(8))
-
+    main()

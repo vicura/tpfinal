@@ -137,8 +137,8 @@ class PointNet:
 
         loss = self.get_loss(pred, y_pl)
 
-        optimizer = tf.train.AdamOptimizer(learning_rate=self.lr).minimize(loss)
-        
+        #optimizer = tf.train.AdamOptimizer(learning_rate=self.lr).minimize(loss)
+        optimizer = tf.keras.optimizers.legacy.Adam(learning_rate=self.lr)
         saver = tf.train.Saver()
 
         # Initializing the variables
