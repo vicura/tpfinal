@@ -18,7 +18,7 @@ def ejecutar_entrenamiento(cutoff):
 def ejecutar_testeo(file,cutoff):
     import testeo
     args = argparse.Namespace(n_classes=2, file_trj=file, cutoff=cutoff, maxneigh=20, 
-                              outname=f'salida_cutoff_{cutoff}_maxneigh_20'
+                              outname=f'salida_cutoff_{cutoff}_maxneigh_20')
     
    
    
