@@ -18,16 +18,16 @@ def main():
     args = get_args()
 
     # List of all classes
-    classes = ['lam','lam_ord','desord']
+    classes = ['lam','desord']
     nclass = len(classes)
 
     #
     list_dir = os.listdir(args.path)    
 
-    desord = [d for d in list_dir if 'lam_desord_' in d]
+    iso = [d for d in list_dir if 'lam_desord_' in d]
     
-    with open('dump.desorden', 'w') as outfile:
-       for fname in desord:
+    with open('dump.iso', 'w') as outfile:
+       for fname in iso:
           with open(fname) as infile:
              for line in infile:
                 outfile.write(line)
@@ -41,15 +41,15 @@ def main():
                 outfile.write(line)
                 
                 
-    lam_ord = [d for d in list_dir if 'lam_ord_' in d]    
+    #lam_ord = [d for d in list_dir if 'lam_ord_' in d]    
  
-    with open('dump.lam_orden', 'w') as outfile:
-       for fname in lam_ord:
-          with open(fname) as infile:
-             for line in infile:
-                outfile.write(line)
+    #with open('dump.lam_orden', 'w') as outfile:
+     #  for fname in lam_ord:
+      #    with open(fname) as infile:
+       #      for line in infile:
+        #        outfile.write(line)
                
-    files = ['dump.lam','dump.lam_orden', 'dump.desorden']          
+    files = ['dump.lam','dump.desorden']          
                
     # Initialize lists for samples and labels
     samples = []
@@ -64,10 +64,9 @@ def main():
     # Progress
        print("Reading file: %s" % files[fcount])
     # Extract classid and create label
-       if 'dump.lam_orden' in files[fcount]:
-          classid = 'lam_ord'
-       elif 'dump.desorden' in files[fcount]:
-          classid = 'desord' 
+
+       if 'dump.iso' in files[fcount]:
+          classid = 'iso' 
        elif 'dump.lam' in files[fcount]:
           classid = 'lam'
        #else:

@@ -25,7 +25,7 @@ def main():
     args = get_args()
     # Lista de clases
 
-    classes = ['lam','lam_ord','desord']
+    classes = ['lam','iso']
     
     # Número de clases
 
@@ -34,33 +34,24 @@ def main():
     # Construyo un único archivo para cada mesofase que contiene los
     # .lammpstj correspondientes
     list_dir = os.listdir(args.path)
-    desord = [d for d in list_dir if 'lam_desord_' in d]
+    iso = [d for d in list_dir if 'lam_desord_' in d]
     
-    with open('dump.desorden2', 'w') as outfile:
-       for fname in desord:
+    with open('dump.iso', 'w') as outfile:
+       for fname in iso:
           with open(fname) as infile:
              for line in infile:
                 outfile.write(line)
     
     lam = [d for d in list_dir if 'lam_pre_ord_' in d]       
  
-    with open('dump.lam2', 'w') as outfile:
+    with open('dump.lam', 'w') as outfile:
        for fname in lam:
           with open(fname) as infile:
              for line in infile:
                 outfile.write(line)
                 
-                
-    lam_ord = [d for d in list_dir if 'lam_ord_' in d]    
- 
-    with open('dump.lam_orden2', 'w') as outfile:
-       for fname in lam_ord:
-          with open(fname) as infile:
-             for line in infile:
-                outfile.write(line)
-
-          
-    files = ['dump.lam2','dump.lam_orden2', 'dump.desorden2']          
+    
+    files = ['dump.lam','dump.iso']          
 
 
     # Divido en samples y labels
@@ -73,11 +64,9 @@ def main():
        print(files[fcount])
     # Extraigo la class id y creo label
 
-       if 'dump.lam_orden2' in files[fcount]:
-          classid = 'lam_ord'
-       elif 'dump.desorden2' in files[fcount]:
-          classid = 'desord' 
-       elif 'dump.lam2' in files[fcount]:
+       if 'dump.iso' in files[fcount]:
+          classid = 'iso' 
+       elif 'dump.lam' in files[fcount]:
           classid = 'lam'
 
        label = np.zeros(len(classes))   
@@ -175,9 +164,8 @@ def main():
     samples_list = []
     labels = []
     labels_list = []
-    desord = []
+    iso = []
     lam = []
-    lam_ord = []
     idxs = []
     sel = []
    

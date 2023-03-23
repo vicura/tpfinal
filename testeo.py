@@ -47,7 +47,7 @@ def evaluo(file_trj,nepochs,batch_size,learning_rate,arg,rate,n_classes,cutoff,m
     f_summary = open(outname+'_summary.mda','w')
 #    f_class = open(outname+'_class.lammpstrj','w')
     
-    f_summary.write("# Time, n_lam, n_lam_ord, n_desord\n")
+    f_summary.write("# Time, n_lam, n_iso\n")
     
         
     # Analizo en cada frame de la trayectoria
@@ -117,11 +117,11 @@ def evaluo(file_trj,nepochs,batch_size,learning_rate,arg,rate,n_classes,cutoff,m
         
         # Extract different atom types
         lam_atoms = np.where(predicted_classes == 0)[0]
-        lam_ord_atoms = np.where(predicted_classes == 1)[0]
-        desord_atoms = np.where(predicted_classes == 2)[0]
+        #lam_ord_atoms = np.where(predicted_classes == 1)[0]
+        iso_atoms = np.where(predicted_classes == 1)[0]
 
         
-        f_summary.write("{:8.3f}{:8d}{:8d}{:8d}\n".format(ts.time,lam_atoms.shape[0],lam_ord_atoms.shape[0],desord_atoms.shape[0]))
+        f_summary.write("{:8.3f}{:8d}{:8d}\n".format(ts.time,lam_atoms.shape[0],iso_atoms.shape[0]))
         
         #for atom in u.atoms:
          #  if  predicted_classes[atom.index] == 2:
