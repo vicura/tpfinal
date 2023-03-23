@@ -2,25 +2,16 @@ import sys, argparse
 
 
 def ejecutar_pre_entrenamiento(cutoff):
-    import pre_entrenamiento
-
-    # Configurar argumentos del script
-    args = argparse.Namespace(path='.', out_name=f'prueba_cutoff_{cutoff}_maxneigh_20', cutoff=cutoff, max_neigh=20, n_samples=80200)
-    return
+    !python3 pre_entrenamiento.py --path '.' --out_name 'prueba_cutoff_{cutoff}_maxneigh_20' --cutoff cutoff --max_neigh 20 --n_samples 80200
+    
 
 def ejecutar_entrenamiento(cutoff):
-    import entrenamiento
-    args = argparse.Namespace(dataset=f'prueba_cutoff_{cutoff}_maxneigh_20_scaled_shuffled_equal_samples.npy', 
-                              labels=f'prueba_cutoff_{cutoff}_maxneigh_20_scaled_shuffled_equal_labels.npy',
-                              batch_size=16, nepochs=15)
-    return
+    !python3 entrenamiento.py --dataset prueba_cutoff_{cutoff}_maxneigh_20_scaled_shuffled_equal_samples.npy --labels prueba_cutoff_{cutoff}_maxneigh_20_scaled_shuffled_equal_labels.npy  --batch_size 16 --nepochs 15
+
 
 def ejecutar_testeo(file,cutoff):
-    import testeo
-    args = argparse.Namespace(n_classes=2, file_trj=file, cutoff=cutoff, maxneigh=20, 
-                              outname=f'salida_cutoff_{cutoff}_maxneigh_20')
-    return
-   
+    !python3 testeo.py --n_classes 3 --file_trj file --cutoff cutoff --maxneigh 20 --outname 'lamelar_cutoff_{cutoff}_maxneigh_20' 
+
    
 def main():       
 
