@@ -32,7 +32,7 @@ def main():
    for cutoff in cutoffs:
     ejecutar_pre_entrenamiento(cutoff)
     ejecutar_entrenamiento(cutoff)
-    ejecutar_testeo(args.file,cutoff)                
+    ejecutar_testeo(args.file_trj,cutoff)                
    
 
 def get_args():
