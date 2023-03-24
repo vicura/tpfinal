@@ -29,7 +29,7 @@ def main():
                       '--labels', f'prueba_cutoff_{cutoff}_maxneigh_30_scaled_shuffled_equal_labels.npy',
                       '--batch_size', '16', '--nepochs', '15'])
       subprocess.run(['python3','testeo.py','--n_classes','3','--file_trj', args.file_trj,'--cutoff',cutoff,
-                       '--maxneigh','30','--outname', args.outname])
+                       '--maxneigh','30','--outname', f'lamelar_cutoff_{cutoff}_maxneigh_30'])
       
       #ejecutar_pre_entrenamiento(cutoff)
       #ejecutar_entrenamiento(cutoff)
@@ -43,7 +43,7 @@ def get_args():
     parser = argparse.ArgumentParser(description='Evalua a cada cutoff especificado la fracción de cada clase')
 
     parser.add_argument('--file_trj', help='path to files', type=str, required=True)
-    parser.add_argument('--outname', help='name output file', type=str, required=True)   
+   
     args = parser.parse_args()
     
     return args
