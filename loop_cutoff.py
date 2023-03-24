@@ -29,7 +29,7 @@ def main():
                       '--labels', f'prueba_cutoff_{cutoff}_maxneigh_30_scaled_shuffled_equal_labels.npy',
                       '--batch_size', '16', '--nepochs', '15'])
       subprocess.run(['python3','testeo.py','--n_classes','3','--file_trj', args.file_trj,'--cutoff',cutoff,
-                       '--maxneigh','50','--outname', f'lamelar_cutoff_{cutoff}_maxneigh_20'])
+                       '--maxneigh','50','--outname', f'lamelar_cutoff_{cutoff}_maxneigh_50'])
       
       #ejecutar_pre_entrenamiento(cutoff)
       #ejecutar_entrenamiento(cutoff)

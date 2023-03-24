@@ -216,8 +216,8 @@ class PointNet:
         fx.set_ylabel('Actual Values ');
 
         # labels the boxes
-        fx.xaxis.set_ticklabels(['0','1','2'])
-        fx.yaxis.set_ticklabels(['0','1','2'])
+        fx.xaxis.set_ticklabels(['0','1'])
+        fx.yaxis.set_ticklabels(['0','1'])
         plt.savefig('cm_sn.png')
         #plt.show()
         
