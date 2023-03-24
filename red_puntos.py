@@ -26,7 +26,7 @@ checkpoint_dir = os.path.dirname(checkpoint_path)
 
 class PointNet:
     def __init__(self, lr=0.001, epochs=15,  \
-        batch_size=32, disp_step=1, input_shape=(50,3,1), \
+        batch_size=32, disp_step=1, input_shape=(50,2,1), \
         rate = 0.3, arg = 1e-5,  \
         n_classes=3):
 
@@ -67,7 +67,7 @@ class PointNet:
         # Point functions (MLP implemented as conv2d)
 
         PointNet = Sequential()
-        PointNet.add(Conv2D(64, kernel_size=(1,3), activation= 'relu',
+        PointNet.add(Conv2D(64, kernel_size=(1,2), activation= 'relu',
                              padding='same', 
                             #activity_regularizer=keras.regularizers.l2(1e-5),
                             kernel_regularizer=keras.regularizers.l2(self.arg),
