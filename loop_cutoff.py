@@ -10,7 +10,7 @@ import subprocess
 
 
 #def ejecutar_testeo(file,cutoff):
- #   !python3 testeo.py --n_classes 3 --file_trj file --cutoff cutoff --maxneigh 20 --outname f'lamelar_cutoff_{cutoff}_maxneigh_20' 
+ #   !python3 testeo.py --n_classes 2 --file_trj file --cutoff cutoff --maxneigh 20 --outname f'lamelar_cutoff_{cutoff}_maxneigh_20' 
 
    
 def main():       
@@ -28,7 +28,7 @@ def main():
                       f'prueba_cutoff_{cutoff}_maxneigh_30_scaled_shuffled_equal_samples.npy', 
                       '--labels', f'prueba_cutoff_{cutoff}_maxneigh_30_scaled_shuffled_equal_labels.npy',
                       '--batch_size', '16', '--nepochs', '15'])
-      subprocess.run(['python3','testeo.py','--n_classes','3','--file_trj', args.file_trj,'--cutoff',cutoff,
+      subprocess.run(['python3','testeo.py','--n_classes','2','--file_trj', args.file_trj,'--cutoff',cutoff,
                        '--maxneigh','30','--outname', f'lamelar_cutoff_{cutoff}_maxneigh_30'])
       
       #ejecutar_pre_entrenamiento(cutoff)
