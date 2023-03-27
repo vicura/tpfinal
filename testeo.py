@@ -47,7 +47,7 @@ def evaluo(file_trj,nepochs,batch_size,learning_rate,arg,rate,n_classes,cutoff,m
 
     # File to write output
     f_summary = open(outname+'_summary.mda','w')
-    f_summary.write("# Time, n_lam, n_iso\n")
+    f_summary.write("#Time, n_lam, n_iso\n")
     
         
     # Analizo en cada frame de la trayectoria
@@ -106,8 +106,10 @@ def evaluo(file_trj,nepochs,batch_size,learning_rate,arg,rate,n_classes,cutoff,m
         lam_atoms = np.where(predicted_classes == 0)[0]
         print('lam atoms :',lam_atoms.shape[0])
         iso_atoms = np.where(predicted_classes == 1)[0]
+        print('iso atoms :',iso_atoms.shape[0])
         f_summary.write("{:8.3f}{:8d}{:8d}\n".format(ts.time,lam_atoms.shape[0],iso_atoms.shape[0]))
-                                                                                               
+        print('timestep: ',ts.time)
+                                                                                                
                                                                                        
     f_summary.close()
 
