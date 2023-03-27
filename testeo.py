@@ -44,25 +44,12 @@ def evaluo(file_trj,nepochs,batch_size,learning_rate,arg,rate,n_classes,cutoff,m
     #resultados = []
 
     # File to write output
-    f_summary = open(outname+'_summary.mda','w')
-#    f_class = open(outname+'_class.lammpstrj','w')
-    
+    f_summary = open(outname+'_summary.mda','w')    
     f_summary.write("# Time, n_lam, n_iso\n")
     
         
     # Analizo en cada frame de la trayectoria
     for ts in u.trajectory:
-        
-   #     f_class.write("ITEM: TIMESTEP\n")
-   #     f_class.write("{:d}\n".format(ts.frame))
-   #     f_class.write("ITEM: NUMBER OF ATOMS\n")
-   #     f_class.write("{:d}\n".format(ts.n_atoms))
-   #     f_class.write("ITEM: BOX BOUNDS pp pp pp\n")
-  #      f_class.write("-"+"{0:.16e} {0:.16e}\n".format(1.0453842000444242e+01,1.0453842000444242e+01))
-   #     f_class.write("-"+"{0:.16e} {0:.16e}\n".format(1.0453842000444242e+01,1.0453842000444242e+01))
-    #    f_class.write("-"+"{0:.16e} {0:.16e}\n".format(1.0453842000444242e+01,1.0453842000444242e+01))
-    #    f_class.write("ITEM: ATOMS id type x y z\n")
-        # Genero una lista de vecinos (dentro de las coordenadas especificadas)
         
         nlist = nsgrid.FastNS(cutoff*1.0,u.atoms.positions,ts.dimensions).self_search()
 
@@ -103,8 +90,8 @@ def evaluo(file_trj,nepochs,batch_size,learning_rate,arg,rate,n_classes,cutoff,m
         # cada frame envío a la red
         predictions = net.predigo_con_red(arg=arg,rate=rate, n_classes= n_classes, input_shape=input_shape, 
         samples=np_samples, steps=len(np_samples))
-        #predicted_classes = np.asarray(predictions)
-        #print(predicted_classes)
+        predicted_classes = np.asarray(predictions)
+        print(predicted_classes)
         
         predicted_classes = np.argmax(np.rint(predictions), axis=1)
         print(predicted_classes)
@@ -117,27 +104,16 @@ def evaluo(file_trj,nepochs,batch_size,learning_rate,arg,rate,n_classes,cutoff,m
         
         # Extract different atom types
         lam_atoms = np.where(predicted_classes == 0)[0]
-        #lam_ord_atoms = np.where(predicted_classes == 1)[0]
         iso_atoms = np.where(predicted_classes == 1)[0]
+        print(iso_atoms)
 
         
-        f_summary.write("{:8.3f}{:8d}{:8d}\n".format(ts.time,lam_atoms.shape[0],iso_atoms.shape[0]))
-        
-        #for atom in u.atoms:
-         #  if  predicted_classes[atom.index] == 2:
-           #   f_class.write("{:d} {:d} {:.10f} {:.10f} {:.10f}\n".format(atom.index,predicted_classes[atom.index],atom.position[0],atom.position[1],atom.position[2]))  
-                                                                                       
+        f_summary.write('{:8.3f}{:8d}{:8d}\n'.format(ts.time,lam_atoms.shape[0],iso_atoms.shape[0]))
+                                                                                             
                                                                                        
     f_summary.close()
-   # f_class.close()
 
-        
-        #resultados.append(predicted_classes)    # Guardo en lista la predicción sobre
-                                                # la clase de cada átomo del 
-                                                # sistema
-    #res = np.asarray(resultados)
-    #np.save(outname + 'npy', res)
-    #print(res.shape)
+
     
     return 
 
