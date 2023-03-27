@@ -120,7 +120,7 @@ def evaluo(file_trj,nepochs,batch_size,learning_rate,arg,rate,n_classes,cutoff,m
     #np.save(outname + 'npy', res)
     #print(res.shape)
     
-    return 
+    return f_summary
 
 
 def main():       
