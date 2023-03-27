@@ -84,17 +84,15 @@ def evaluo(file_trj,nepochs,batch_size,learning_rate,arg,rate,n_classes,cutoff,m
        
         a,b,c = np_samples.shape
         np_samples = np_samples.reshape(a,b,c,-1) 
-        #print(np_samples.shape)
+        print('samples shape: ',np_samples.shape)
         
         input_shape = (maxneigh, n_classes, 1)
         # cada frame envío a la red
         predictions = net.predigo_con_red(arg=arg,rate=rate, n_classes= n_classes, input_shape=input_shape, 
         samples=np_samples, steps=len(np_samples))
-        predicted_classes = np.asarray(predictions)
-        print(predicted_classes)
         
         predicted_classes = np.argmax(np.rint(predictions), axis=1)
-        print(predicted_classes)
+        print('predicted classes: ',predicted_classes)
         
         
         np_samples = []
@@ -104,16 +102,23 @@ def evaluo(file_trj,nepochs,batch_size,learning_rate,arg,rate,n_classes,cutoff,m
         
         # Extract different atom types
         lam_atoms = np.where(predicted_classes == 0)[0]
+        print('lam atoms :',lam_atoms)
         iso_atoms = np.where(predicted_classes == 1)[0]
-        print(iso_atoms)
 
         
-        f_summary.write('{:8.3f}{:8d}{:8d}\n'.format(ts.time,lam_atoms.shape[0],iso_atoms.shape[0]))
-                                                                                             
+        f_summary.write("{:8.3f}{:8d}{:8d}\n".format(ts.time,lam_atoms.shape[0],iso_atoms.shape[0]))
+                                                                                               
                                                                                        
     f_summary.close()
 
 
+        
+        #resultados.append(predicted_classes)    # Guardo en lista la predicción sobre
+                                                # la clase de cada átomo del 
+                                                # sistema
+    #res = np.asarray(resultados)
+    #np.save(outname + 'npy', res)
+    #print(res.shape)
     
     return 
 
