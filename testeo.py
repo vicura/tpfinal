@@ -22,10 +22,12 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 """# Testeo"""
 
 
-
 """Evalúo la red con el enfriamiento de mi sistema. En la simulación de 400 frames (o time steps) se ve la transición de mesofase desordenada a altas temperaturas a mesofase lamelar, para luego llegar a lamelar critalizada a bajas temperaturas"""
 
-
+if os.access('.', os.W_OK):
+    print("Tienes permiso de escritura en el directorio actual.")
+else:
+    print("No tienes permiso de escritura en el directorio actual.")
 
 # Función modificada de https://github.com/rsdefever/GenStrIde/blob/master/scripts/mda_cluster.py
 
@@ -44,7 +46,7 @@ def evaluo(file_trj,nepochs,batch_size,learning_rate,arg,rate,n_classes,cutoff,m
     #resultados = []
 
     # File to write output
-    f_summary = open(outname+'_summary.mda','w')    
+    f_summary = open(outname+'_summary.mda','w')
     f_summary.write("# Time, n_lam, n_iso\n")
     
         
@@ -102,10 +104,8 @@ def evaluo(file_trj,nepochs,batch_size,learning_rate,arg,rate,n_classes,cutoff,m
         
         # Extract different atom types
         lam_atoms = np.where(predicted_classes == 0)[0]
-        print('lam atoms :',lam_atoms)
+        print('lam atoms :',lam_atoms.shape[0])
         iso_atoms = np.where(predicted_classes == 1)[0]
-
-        
         f_summary.write("{:8.3f}{:8d}{:8d}\n".format(ts.time,lam_atoms.shape[0],iso_atoms.shape[0]))
                                                                                                
                                                                                        
