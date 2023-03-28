@@ -108,9 +108,9 @@ def evaluo(file_trj,nepochs,batch_size,learning_rate,arg,rate,n_classes,cutoff,m
        new_df = f_summary.to_string(index=False)
        f.write(new_df)
 
-    promedios = pd.DataFrame()
-    promedios['nº partículas lam'] = f_summary['nº partículas lam'].mean()
-    promedios['nº partículas iso'] = f_summary['nº partículas iso'].mean()
+    promedios = pd.DataFrame({'nº partículas lam': f_summary['nº partículas lam'].mean(), 
+                            'nº partículas iso':f_summary['nº partículas iso'].mean()})
+
 
     with open(outname+'_promedios.txt', 'w') as f:
        new_df = promedios.to_string(index=False)
