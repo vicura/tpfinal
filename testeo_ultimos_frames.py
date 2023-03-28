@@ -7,6 +7,7 @@ import MDAnalysis as mda
 import argparse
 import nsgrid_rsd as nsgrid
 from red_puntos import PointNet
+import gc
 
 os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID" 
 os.environ["CUDA_VISIBLE_DEVICES"]="1"
@@ -116,7 +117,8 @@ def evaluo(file_trj,nepochs,batch_size,learning_rate,arg,rate,n_classes,cutoff,m
     with open(outname+'_promedios.txt', 'w') as f:
        new_df = promedios.to_string(index=False)
        f.write(new_df)   
-
+    
+    gc.collect()
         #resultados.append(predicted_classes)    # Guardo en lista la predicción sobre
                                                 # la clase de cada átomo del 
                                                 # sistema
