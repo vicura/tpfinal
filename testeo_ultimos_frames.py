@@ -108,11 +108,13 @@ def evaluo(file_trj,nepochs,batch_size,learning_rate,arg,rate,n_classes,cutoff,m
     with open(outname+'_por_frame.txt', 'w') as f:
        new_df = f_summary.to_string(index=False)
        f.write(new_df)
+    
+    promedios = pd.DataFrame(columns=['cutoff', 'nº partículas lam','nº partículas iso'])
+    new_row = pd.Series({'cutoff':cutoff, 'nº partículas lam':f_summary['nº partículas lam'].mean() , 
+                            'nº partículas iso':f_summary['nº partículas iso'].mean()})
+    promedios = pd.concat([promedios, new_row.to_frame().T], ignore_index=True)
+    
 
-
-    promedios = pd.DataFrame()
-    promedios['nº partículas lam'] = f_summary['nº partículas lam'].mean()
-    promedios['nº partículas iso'] = f_summary['nº partículas iso'].mean()
 
 #.tail(10)
     with open(outname+'_promedios.txt', 'w') as f:
