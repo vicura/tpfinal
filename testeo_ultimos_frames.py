@@ -42,7 +42,7 @@ def evaluo(file_trj,nepochs,batch_size,learning_rate,arg,rate,n_classes,cutoff,m
     f_summary = pd.DataFrame(columns=['time', 'nº partículas lam', 'nº partículas iso'])
         
     # Analizo en cada frame de la trayectoria
-    for ts in u.trajectory:
+    for ts in u.trajectory[45:54]:
         
         nlist = nsgrid.FastNS(cutoff*1.0,u.atoms.positions,ts.dimensions).self_search()
 
@@ -110,10 +110,10 @@ def evaluo(file_trj,nepochs,batch_size,learning_rate,arg,rate,n_classes,cutoff,m
        f.write(new_df)
 
 
-    promedios = pd.DataFrame({'nº partículas lam': f_summary['nº partículas lam'].tail(10).mean(), 
-                            'nº partículas iso':f_summary['nº partículas iso'].tail(10).mean()})
+    promedios = pd.DataFrame({'nº partículas lam': f_summary['nº partículas lam'].mean(), 
+                            'nº partículas iso':f_summary['nº partículas iso'].mean()})
 
-
+#.tail(10)
     with open(outname+'_promedios.txt', 'w') as f:
        new_df = promedios.to_string(index=False)
        f.write(new_df)   
