@@ -16,7 +16,9 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 """# Testeo"""
 
 
-"""Evalúo la red con el enfriamiento de mi sistema. En la simulación de 400 frames (o time steps) se ve la transición de mesofase desordenada a altas temperaturas a mesofase lamelar, para luego llegar a lamelar critalizada a bajas temperaturas"""
+"""Evalúo la red con el enfriamiento de mi sistema. En la simulación de 400 frames (o time steps) 
+se ve la transición de mesofase desordenada a altas temperaturas a mesofase lamelar, para luego 
+llegar a lamelar critalizada a bajas temperaturas"""
 
 
 
@@ -24,6 +26,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 def evaluo(file_trj,nepochs,batch_size,learning_rate,arg,rate,n_classes,cutoff,maxneigh,outname):     
     
+    # Cargo red
     net = PointNet(epochs=nepochs,
                    batch_size=batch_size,
                    lr=learning_rate,
@@ -31,37 +34,50 @@ def evaluo(file_trj,nepochs,batch_size,learning_rate,arg,rate,n_classes,cutoff,m
                    arg = arg,
                    rate = rate)
     
-    
+    # Cargo topología
     u = mda.Universe(file_trj,topology_format='LAMMPSDUMP')
-    
-    #resultados = []
 
-    # File to write output
-    #f_summary = open(outname+'_summary.mda','w')
-    #f_summary.write("#Time, n_lam, n_iso\n")
+    # Archivo de salida
     f_summary = pd.DataFrame(columns=['time', 'nº partículas lam', 'nº partículas iso'])
         
-    # Analizo en cada frame de la trayectoria
+    # Analizo los últimos 10 frames de la trayectoria
     for ts in u.trajectory[45:55]:
         
+        # Grid based search between positions
+       # Searches all the pairs within the initialized coordinates
+       # All the pairs among the initialized coordinates are registered in hald the time.
+       # Although the algorithm is still the same, but the distance checks can be reduced 
+       # to half in this particular case as every pair need not be evaluated twice.
         nlist = nsgrid.FastNS(cutoff*1.0,u.atoms.positions,ts.dimensions).self_search()
 
+        
+
         # Extraigo la información requerida 
-        ndxs = nlist.get_indices()
-        dxs = nlist.get_dx()
-        dists = nlist.get_distances()
+        ndxs = nlist.get_indices()        # Individual neighbours of query atom.
+                                          # For every queried atom ``i``, an array of all its neighbors
+                                          # indices can be obtained from ``get_indices()[i]``
+        dxs = nlist.get_dx()              # Devuelve coordenadas de los vecinos
+        dists = nlist.get_distances()     # Distance corresponding to individual neighbors of query atom
+                                          # For every queried atom ``i``, a list of all the distances
+                                          # from its neighboring atoms can be obtained from 
+                                          # ``get_distances()[i]``.
 
         samples = []
         # Preparo las muestras para enviarlas a la red
+
+        # Itero sobre vecinos
         for i in range(len(dxs)):
             ## Ordeno los vecinos por distancia (de manera que pueda normalizar
             ## las distancias luego)
-            nneigh = int(len(dxs[i])/3)
+            nneigh = int(len(dxs[i])/3)   # por que divido por 3?
             np_dxs = np.asarray(dxs[i]).reshape([nneigh,3])
-            sort_order = np.asarray(dists[i]).argsort() 
+            sort_order = np.asarray(dists[i]).argsort()  # Returns the indices that would sort an array.
             np_dxs = np_dxs[sort_order]
+            
+            # Normalizo distancias
             if nneigh > 0:
-                np_dxs /= np.linalg.norm(np_dxs[0])
+                np_dxs /= np.linalg.norm(np_dxs[0]) # equivalente a np_dxs = np_dxs/np.linalg.norm(np_dxs[0])
+                                                     
             # Corrijo el tamaño del input, sumando o quitando puntos
             if nneigh < maxneigh:
                 np_dxs = np.pad(np_dxs,[(0, maxneigh-nneigh), (0, 0)],'constant',)

@@ -1,4 +1,3 @@
-
 # Ryan DeFever
 # Sarupria Research Group
 # Clemson University
