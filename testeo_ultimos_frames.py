@@ -56,7 +56,9 @@ def evaluo(file_trj,nepochs,batch_size,learning_rate,arg,rate,n_classes,cutoff,m
         ndxs = nlist.get_indices()        # Individual neighbours of query atom.
                                           # For every queried atom ``i``, an array of all its neighbors
                                           # indices can be obtained from ``get_indices()[i]``
-        dxs = nlist.get_dx()              # Devuelve coordenadas de los vecinos
+        dxs = nlist.get_dx()              # Devuelve coordenadas de los vecinos?
+                                          # For every queried atom ``i``, an array of all its neighbors
+                                          # coordinates can be obtained from ``get_dx()[i]``
         dists = nlist.get_distances()     # Distance corresponding to individual neighbors of query atom
                                           # For every queried atom ``i``, a list of all the distances
                                           # from its neighboring atoms can be obtained from 
@@ -65,19 +67,21 @@ def evaluo(file_trj,nepochs,batch_size,learning_rate,arg,rate,n_classes,cutoff,m
         samples = []
         # Preparo las muestras para enviarlas a la red
 
-        # Itero sobre vecinos
+        # Itero sobre particulas
         for i in range(len(dxs)):
             ## Ordeno los vecinos por distancia (de manera que pueda normalizar
             ## las distancias luego)
-            nneigh = int(len(dxs[i])/3)   # por que divido por 3?
-            np_dxs = np.asarray(dxs[i]).reshape([nneigh,3])
+            nneigh = int(len(dxs[i])/3)   # Obtengo numero de vecinos
+                                          # por que divido por 3? 3 dimensiones?
+            np_dxs = np.asarray(dxs[i]).reshape([nneigh,3])  # transformo en array la lista de coord 
+                                                             # de vecino y hago cambio de forma
             sort_order = np.asarray(dists[i]).argsort()  # Returns the indices that would sort an array.
-            np_dxs = np_dxs[sort_order]
+            np_dxs = np_dxs[sort_order]                  # Ordeno array de vecinos de menor a mayor distancia
             
             # Normalizo distancias
             if nneigh > 0:
                 np_dxs /= np.linalg.norm(np_dxs[0]) # equivalente a np_dxs = np_dxs/np.linalg.norm(np_dxs[0])
-                                                     
+                                                    # (me da 1 el vecino mas cercano?) 
             # Corrijo el tamaño del input, sumando o quitando puntos
             if nneigh < maxneigh:
                 np_dxs = np.pad(np_dxs,[(0, maxneigh-nneigh), (0, 0)],'constant',)
