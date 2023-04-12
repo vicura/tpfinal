@@ -93,6 +93,7 @@ def main():
           dists = nlist.get_distances()          # Devuelve las distancias 
                                                  # individiales de cada uno de 
                                                  # los vecinos
+          # Itero sobre los átomos seleccionados
           for i in range(len(sel)):
             
              np_dxs = np.asarray(dxs[i]).reshape(-1,3)
@@ -100,7 +101,7 @@ def main():
              sort = np.argsort(dists[i])         # Ordeno de acuerdo a las 
                                                  # distancias
              vals = np_dxs[sort][1:]             # Remuevo el átomo (0,0,0) 
-                                                 # (osea el átomo seleccionado 
+                                                 # (que es el átomo seleccionado 
                                                  # para buscar sus vecinos)
              nneigh = vals.shape[0]              # Número de vecinos
 

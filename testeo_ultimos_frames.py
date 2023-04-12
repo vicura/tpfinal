@@ -65,6 +65,7 @@ def evaluo(file_trj,nepochs,batch_size,learning_rate,arg,rate,n_classes,cutoff,m
                                           # ``get_distances()[i]``.
 
         samples = []
+        
         # Preparo las muestras para enviarlas a la red
 
         # Itero sobre particulas
@@ -81,7 +82,7 @@ def evaluo(file_trj,nepochs,batch_size,learning_rate,arg,rate,n_classes,cutoff,m
             # Normalizo distancias
             if nneigh > 0:
                 np_dxs /= np.linalg.norm(np_dxs[0]) # equivalente a np_dxs = np_dxs/np.linalg.norm(np_dxs[0])
-                                                    # (me da 1 el vecino mas cercano?) 
+                                                    # Normalizo de manera que la distancia al átomo más cercano es 1.0 unidades
             # Corrijo el tamaño del input, sumando o quitando puntos
             if nneigh < maxneigh:
                 np_dxs = np.pad(np_dxs,[(0, maxneigh-nneigh), (0, 0)],'constant',)
