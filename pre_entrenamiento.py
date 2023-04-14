@@ -153,6 +153,8 @@ def main():
     # 4. Normalizo cada muestra de manera que la distancia al átomo más cercano es 1.0 unidades
     for k in range(samples.shape[0]):
         samples[k,...] = samples[k,...]/np.linalg.norm(samples[k][0])
+        samples[k,...] = np.array(samples[k,...])
+        samples[k,...] = np.nan_to_num(samples[k,...])
     
 
     # Guardo outputs
