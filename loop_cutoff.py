@@ -27,9 +27,9 @@ def main():
       subprocess.run(['python3', 'entrenamiento.py', '--dataset', 
                       f'prueba_cutoff_{cutoff}_maxneigh_30_scaled_shuffled_equal_samples.npy', 
                       '--labels', f'prueba_cutoff_{cutoff}_maxneigh_30_scaled_shuffled_equal_labels.npy',
-                      '--batch_size', '16', '--nepochs', '15'])
+                      '--batch_size', '32', '--nepochs', '50'])
       subprocess.run(['python3','testeo_ultimos_frames.py','--n_classes','2','--file_trj', args.file_trj,'--cutoff',cutoff,
-                       '--maxneigh','30','--outname', f'lamelar_cutoff_{cutoff}_maxneigh_30'])
+                       '--maxneigh','30','--outname', f'hex_cutoff_{cutoff}_maxneigh_30'])
       
       #ejecutar_pre_entrenamiento(cutoff)
       #ejecutar_entrenamiento(cutoff)
