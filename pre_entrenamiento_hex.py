@@ -34,7 +34,7 @@ def main():
     # Construyo un único archivo para cada mesofase que contiene los
     # .hexmpstj correspondientes
     list_dir = os.listdir(args.path)
-    iso = [d for d in list_dir if 'hex_dump_desord' in d]
+    iso = [d for d in list_dir if 'dump_hex1' in d]
     
     with open('dump.iso', 'w') as outfile:
        for fname in iso:
@@ -42,7 +42,7 @@ def main():
              for line in infile:
                 outfile.write(line)
     
-    hex = [d for d in list_dir if 'ord_dump_hex' in d]       
+    hex = [d for d in list_dir if 'dump_hex0' in d]       
  
     with open('dump.hex', 'w') as outfile:
        for fname in hex:
