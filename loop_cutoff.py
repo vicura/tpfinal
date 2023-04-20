@@ -17,8 +17,8 @@ def main():
 
    args = get_args() 
    # Lista de cutoffs
-
-   cutoffs = ['0.6','0.7','0.8','0.9','1.0','1.1','1.2','1.3','1.4','1.5','1.6','1.7','1.8','1.9','2.0']
+#'0.6','0.7','0.8','0.9','1.0','1.1','1.2','1.3','1.4','1.5','1.6','1.7','1.8','1.9',
+   cutoffs = ['2.0']
 
    for cutoff in cutoffs:
       subprocess.run(['python3', 'pre_entrenamiento.py', '--path', '.', '--out_name', 
