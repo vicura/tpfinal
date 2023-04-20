@@ -34,7 +34,7 @@ def main():
     # Construyo un único archivo para cada mesofase que contiene los
     # .lammpstj correspondientes
     list_dir = os.listdir(args.path)
-    iso = [d for d in list_dir if 'lam_desord_' in d]
+    iso = [d for d in list_dir if d.startswith('dump_iso')]
     
     with open('dump.iso', 'w') as outfile:
        for fname in iso:
@@ -42,7 +42,7 @@ def main():
              for line in infile:
                 outfile.write(line)
     
-    lam = [d for d in list_dir if 'lam_pre_ord_' in d]       
+    lam = [d for d in list_dir if d.startswith('dump_lam')]       
  
     with open('dump.lam', 'w') as outfile:
        for fname in lam:
