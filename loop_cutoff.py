@@ -21,7 +21,7 @@ def main():
    cutoffs = ['0.6','0.7','0.8','0.9','1.0','1.1','1.2','1.3','1.4','1.5','1.6','1.7','1.8','1.9','2.0']
 
    for cutoff in cutoffs:
-      subprocess.run(['python3', 'pre_entrenamiento_hex.py', '--path', '.', '--out_name', 
+      subprocess.run(['python3', 'pre_entrenamiento.py', '--path', '.', '--out_name', 
                       f'prueba_cutoff_{cutoff}_maxneigh_50', '--cutoff', str(cutoff),
                         '--max_neigh', '50', '--n_samples', '80200'])
       subprocess.run(['python3', 'entrenamiento.py', '--dataset', 
@@ -29,7 +29,7 @@ def main():
                       '--labels', f'prueba_cutoff_{cutoff}_maxneigh_50_scaled_shuffled_equal_labels.npy',
                       '--batch_size', '32', '--nepochs', '50'])
       subprocess.run(['python3','testeo_ultimos_frames.py','--n_classes','2','--file_trj', args.file_trj,'--cutoff',cutoff,
-                       '--maxneigh','50','--outname', f'hex_cutoff_{cutoff}_maxneigh_50'])
+                       '--maxneigh','50','--outname', f'lam_cutoff_{cutoff}_maxneigh_50'])
       
       #ejecutar_pre_entrenamiento(cutoff)
       #ejecutar_entrenamiento(cutoff)
