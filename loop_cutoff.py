@@ -23,7 +23,7 @@ def main():
    for cutoff in cutoffs:
       subprocess.run(['python3', 'pre_entrenamiento_hex.py', '--path', '.', '--out_name', 
                       f'prueba_cutoff_{cutoff}_maxneigh_50', '--cutoff', str(cutoff),
-                        '--max_neigh', '50', '--n_samples', '60150'])
+                        '--max_neigh', '50', '--n_samples', '10025'])
       subprocess.run(['python3', 'entrenamiento.py', '--dataset', 
                       f'prueba_cutoff_{cutoff}_maxneigh_50_scaled_shuffled_equal_samples.npy', 
                       '--labels', f'prueba_cutoff_{cutoff}_maxneigh_50_scaled_shuffled_equal_labels.npy',
