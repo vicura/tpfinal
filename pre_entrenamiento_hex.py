@@ -35,7 +35,7 @@ def main():
     # .hexmpstj correspondientes
     list_dir = os.listdir(args.path)
     
-    iso = [d for d in list_dir if d.startswith('dump_hexiso_')]
+    iso = [d for d in list_dir if d.startswith('hex_dump_desord')]
     
     with open('dump.iso', 'w') as outfile:
        for fname in iso:
@@ -43,7 +43,7 @@ def main():
              for line in infile:
                 outfile.write(line)
     
-    hex = [d for d in list_dir if d.startswith('dump_hex_')]          
+    hex = [d for d in list_dir if d.startswith('ord_dump_hex')]          
  
     with open('dump.hex', 'w') as outfile:
        for fname in hex:
